@@ -1,4 +1,3 @@
-
 using FinanceTracker.Models;
 using Microsoft.EntityFrameworkCore;
 

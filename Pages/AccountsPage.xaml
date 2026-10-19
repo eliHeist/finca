@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FinanceTracker.Pages.AccountsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:FinanceTracker.ViewModels"
+    x:DataType="vm:AccountsViewModel"
+    Title="Accounts">
+
+    <Grid Padding="20" RowDefinitions="Auto,*" RowSpacing="16">
+        <VerticalStackLayout Spacing="4">
+            <Label
+                Text="Your accounts"
+                FontSize="28"
+                FontAttributes="Bold" />
+
+            <Label
+                Text="Track personal and company funds."
+                TextColor="Gray" />
+        </VerticalStackLayout>
+
+        <CollectionView
+            Grid.Row="1"
+            ItemsSource="{Binding Accounts}">
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout
+                    Padding="20"
+                    Spacing="8"
+                    VerticalOptions="Center">
+
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" />
+
+                    <Label
+                        Text="No accounts found."
+                        HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:AccountRow">
+                    <Border
+                        Padding="16"
+                        Margin="0,0,0,10"
+                        Stroke="#DDDDDD"
+                        StrokeThickness="1">
+
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                            <Label
+                                Text="{Binding Name}"
+                                FontAttributes="Bold"
+                                FontSize="16" />
+
+                            <Label
+                                Grid.Row="1"
+                                Text="{Binding Type}"
+                                TextColor="Gray"
+                                FontSize="12" />
+
+                            <Label
+                                Grid.Column="1"
+                                Grid.RowSpan="2"
+                                Text="{Binding Balance}"
+                                VerticalOptions="Center"
+                                FontAttributes="Bold" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label
+            Grid.Row="1"
+            Text="{Binding ErrorMessage}"
+            TextColor="Red"
+            VerticalOptions="End" />
+    </Grid>
+</ContentPage>

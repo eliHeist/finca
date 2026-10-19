@@ -1,5 +1,4 @@
-﻿
-using FinanceTracker.Data;
+﻿using FinanceTracker.Data;
 
 namespace FinanceTracker;
 
