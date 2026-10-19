@@ -1,26 +1,56 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿
+using FinanceTracker.Data;
 
 namespace FinanceTracker;
 
 public partial class App : Application
 {
-	public App()
-	{
-	    AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
-        {
-            var ex = args.ExceptionObject as Exception;
-            System.Diagnostics.Debug.WriteLine($"CRASH: {ex?.Message} \n {ex?.StackTrace}");
-        };
-	
-        TaskScheduler.UnobservedTaskException += (sender, args) =>
-        {
-            System.Diagnostics.Debug.WriteLine($"TASK CRASH: {args.Exception?.Message}");
-        };
-		InitializeComponent();
-	}
+    private readonly DatabaseInitializer _databaseInitializer;
 
-	protected override Window CreateWindow(IActivationState? activationState)
-	{
-		return new Window(new AppShell());
-	}
+    public App(DatabaseInitializer databaseInitializer)
+    {
+        InitializeComponent();
+
+        _databaseInitializer = databaseInitializer;
+
+        MainPage = new ContentPage
+        {
+            Content = new VerticalStackLayout
+            {
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Center,
+                Children =
+                {
+                    new ActivityIndicator
+                    {
+                        IsRunning = true
+                    },
+                    new Label
+                    {
+                        Text = "Preparing your finances..."
+                    }
+                }
+            }
+        };
+
+        InitializeDatabaseAsync();
+    }
+
+    private async void InitializeDatabaseAsync()
+    {
+        try
+        {
+            await _databaseInitializer.InitializeAsync();
+
+            MainPage = new AppShell();
+        }
+        catch (Exception ex)
+        {
+            await MainPage!.DisplayAlert(
+                "Database error",
+                ex.Message,
+                "OK"
+            );
+        }
+    }
 }
