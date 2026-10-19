@@ -1,0 +1,66 @@
+## .NET MAUI & .NET Core
+/[Bb]in/
+/[Oo]bj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Visual Studio Code
+.vscode/
+
+## Build results & Publish
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]uild/
+[Pp]ublish/
+[Tt]emp/
+
+## Mobile Platform Specifics (Android, iOS, MacCatalyst, Windows)
+# Android
+*.apk
+*.aab
+*.apks
+.gradle/
+android/app/build/
+
+# iOS / MacCatalyst
+*.ipa
+*.app/
+DerivedData/
+*.xcarchive
+Pods/
+*.provisionprofile
+
+# Windows (WinUI / MSIX)
+AppPackages/
+BundleArtifacts/
+*.msix
+*.cer
+*.pfx
+
+## Operating System Files
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# Linux
+.directory
+*~
+
+## Logs and Diagnostics
+*.log
+*.etl
+*.dump
