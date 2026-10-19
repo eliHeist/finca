@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using FinanceTracker.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker;
 
@@ -19,6 +21,17 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
-		return builder.Build();
+        var databasePath = Path.Combine(
+            FileSystem.AppDataDirectory,
+            "ft.db"
+        );
+        
+        builder.Services.AddDbContextFactory<FinanceDbContext>(
+            options => options.UseSqlite(
+                $"Data Source={databasePath}"
+            )
+        );
+
+        return builder.Build();
 	}
 }
