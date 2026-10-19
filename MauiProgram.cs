@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
-using FinanceTracker.Data;
 using Microsoft.EntityFrameworkCore;
+
+using FinanceTracker.Data;
+using FinanceTracker.Services;
 
 namespace FinanceTracker;
 
@@ -33,6 +35,7 @@ public static class MauiProgram
         );
 
         builder.Services.AddSingleton<DatabaseInitializer>();
+        builder.Services.AddTransient<AccountService>();
 
         return builder.Build();
 	}
