@@ -25,12 +25,14 @@ public static class MauiProgram
             FileSystem.AppDataDirectory,
             "ft.db"
         );
-        
+
         builder.Services.AddDbContextFactory<FinanceDbContext>(
             options => options.UseSqlite(
                 $"Data Source={databasePath}"
             )
         );
+
+        builder.Services.AddSingleton<DatabaseInitializer>();
 
         return builder.Build();
 	}
