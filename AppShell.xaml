@@ -6,9 +6,16 @@
     xmlns:local="clr-namespace:FinanceTracker.Pages"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Title="Accounts"
-        ContentTemplate="{DataTemplate local:AccountsPage}"
-        Route="AccountsPage" />
+    <TabBar>
+        <ShellContent
+            Title="Accounts"
+            ContentTemplate="{DataTemplate local:AccountsPage}"
+            Route="AccountsPage" />
+
+        <ShellContent
+            Title="Add Expense"
+            ContentTemplate="{DataTemplate local:ExpensePage}"
+            Route="ExpensePage" />
+    </TabBar>
 
 </Shell>

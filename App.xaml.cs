@@ -5,51 +5,65 @@ namespace FinanceTracker;
 public partial class App : Application
 {
     private readonly DatabaseInitializer _databaseInitializer;
+    private readonly DefaultDataSeeder _defaultDataSeeder;
 
-    public App(DatabaseInitializer databaseInitializer)
+    public App(
+        DatabaseInitializer databaseInitializer,
+        DefaultDataSeeder defaultDataSeeder)
     {
         InitializeComponent();
 
         _databaseInitializer = databaseInitializer;
+        _defaultDataSeeder = defaultDataSeeder;
+    }
 
-        MainPage = new ContentPage
+    protected override Window CreateWindow(
+        IActivationState? activationState)
+    {
+        var window = new Window(new ContentPage
         {
             Content = new VerticalStackLayout
             {
                 VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.Center,
                 Children =
                 {
                     new ActivityIndicator
                     {
-                        IsRunning = true
+                        IsRunning = true,
+                        HorizontalOptions = LayoutOptions.Center
                     },
                     new Label
                     {
-                        Text = "Preparing your finances..."
+                        Text = "Preparing your finances...",
+                        HorizontalOptions = LayoutOptions.Center
                     }
                 }
             }
-        };
+        });
 
-        InitializeDatabaseAsync();
+        InitializeDatabaseAsync(window);
+
+        return window;
     }
 
-    private async void InitializeDatabaseAsync()
+    private async void InitializeDatabaseAsync(Window window)
     {
         try
         {
             await _databaseInitializer.InitializeAsync();
+            await _defaultDataSeeder.SeedAsync();
 
-            MainPage = new AppShell();
+            window.Page = new AppShell();
         }
         catch (Exception ex)
         {
-            await MainPage!.DisplayAlert(
-                "Database error",
-                ex.Message,
-                "OK"
-            );
+            if (window.Page is Page page)
+            {
+                await page.DisplayAlertAsync(
+                    "Database error",
+                    ex.Message,
+                    "OK");
+            }
         }
     }
 }

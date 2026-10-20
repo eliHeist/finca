@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FinanceTracker.Pages.ExpensePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Add Expense">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="18">
+
+            <Label
+                Text="Add expense"
+                FontSize="28"
+                FontAttributes="Bold" />
+
+            <Label Text="Amount (UGX)" />
+
+            <Entry
+                Placeholder="e.g. 15000"
+                Keyboard="Numeric"
+                Text="{Binding Amount}" />
+
+            <Label Text="Category" />
+
+            <Picker
+                Title="Choose category"
+                ItemsSource="{Binding Categories}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding SelectedCategory}" />
+
+            <Label Text="Date" />
+
+            <DatePicker Date="{Binding OccurredAt}" />
+
+            <Label Text="Description (optional)" />
+
+            <Entry
+                Placeholder="What did you spend on?"
+                Text="{Binding Description}" />
+
+            <Border
+                Padding="16"
+                Stroke="{AppThemeBinding Light=#D1D5DB, Dark=#4B5563}"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 12">
+
+                <VerticalStackLayout Spacing="12">
+
+                    <Label
+                        Text="External funding"
+                        FontSize="18"
+                        FontAttributes="Bold" />
+
+                    <Label
+                        Text="Enable this when an employer or another source covers the expense."
+                        FontSize="13" />
+
+                    <HorizontalStackLayout Spacing="12">
+                        <Switch
+                            IsToggled="{Binding IsExternallyFunded}"
+                            VerticalOptions="Center" />
+
+                        <Label
+                            Text="Externally funded"
+                            VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <VerticalStackLayout
+                        Spacing="8"
+                        IsVisible="{Binding IsExternallyFunded}">
+
+                        <Label Text="Funding source" />
+
+                        <Picker
+                            Title="Choose source"
+                            ItemsSource="{Binding Sources}"
+                            ItemDisplayBinding="{Binding Name}"
+                            SelectedItem="{Binding SelectedSource}" />
+
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <Button
+                Text="Save expense"
+                Command="{Binding SaveCommand}"
+                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+
+            <ActivityIndicator
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}" />
+
+            <Label
+                Text="{Binding StatusMessage}"
+                LineBreakMode="WordWrap" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
