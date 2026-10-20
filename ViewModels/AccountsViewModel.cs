@@ -35,11 +35,17 @@ public partial class AccountsViewModel(
 
             foreach (var account in balances)
             {
+                var label = account.Type switch
+                {
+                    AccountType.Personal => "Income minus personal expenses",
+                    AccountType.External => "Total externally funded expenses",
+                    _ => "Activity"
+                };
+
                 Accounts.Add(new AccountRow(
                     account.Name,
-                    account.Type.ToString(),
-                    FormatMoney(account.Balance)
-                ));
+                    label,
+                    FormatMoney(account.Balance)));
             }
         }
         catch (Exception ex)
@@ -59,5 +65,4 @@ public partial class AccountsViewModel(
 public sealed record AccountRow(
     string Name,
     string Type,
-    string Balance
-);
+    string Balance);

@@ -1,5 +1,5 @@
-
 using FinanceTracker.Data;
+using FinanceTracker.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Services;
@@ -14,31 +14,59 @@ public sealed class AccountService(
         var accounts = await db.Accounts
             .AsNoTracking()
             .Where(a => a.IsActive)
-            .OrderBy(a => a.Name)
+            .OrderBy(a => a.Type)
             .ToListAsync();
 
-        var totals = await db.LedgerEntries
+        var transactions = await db.Transactions
             .AsNoTracking()
-            .GroupBy(e => e.AccountId)
-            .Select(g => new
-            {
-                AccountId = g.Key,
-                Balance = g.Sum(e => e.AmountDelta)
-            })
-            .ToDictionaryAsync(x => x.AccountId, x => x.Balance);
+            .Where(t => t.IsPosted)
+            .ToListAsync();
 
-        return accounts.Select(account => new AccountBalance(
-            account.Id,
-            account.Name,
-            account.Type,
-            totals.GetValueOrDefault(account.Id, 0)
-        )).ToList();
+        var results = new List<AccountBalance>();
+
+        foreach (var account in accounts)
+        {
+            long amount;
+
+            if (account.Type == AccountType.Personal)
+            {
+                var income = transactions
+                    .Where(t =>
+                        t.Kind == TransactionKind.Income &&
+                        t.DestinationAccountId == account.Id &&
+                        !t.IsExternalFundingOffset)
+                    .Sum(t => t.Amount);
+
+                var expenses = transactions
+                    .Where(t =>
+                        t.Kind == TransactionKind.Expense &&
+                        t.SourceAccountId == account.Id)
+                    .Sum(t => t.Amount);
+
+                amount = income - expenses;
+            }
+            else
+            {
+                amount = transactions
+                    .Where(t =>
+                        t.Kind == TransactionKind.Expense &&
+                        t.SourceAccountId == account.Id)
+                    .Sum(t => t.Amount);
+            }
+
+            results.Add(new AccountBalance(
+                account.Id,
+                account.Name,
+                account.Type,
+                amount));
+        }
+
+        return results;
     }
 }
 
 public sealed record AccountBalance(
     Guid Id,
     string Name,
-    Models.AccountType Type,
-    long Balance
-);
+    AccountType Type,
+    long Balance);

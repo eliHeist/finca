@@ -84,8 +84,7 @@
 
             <Button
                 Text="Save expense"
-                Command="{Binding SaveCommand}"
-                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+                Command="{Binding SaveCommand}" />
 
             <ActivityIndicator
                 IsRunning="{Binding IsBusy}"
