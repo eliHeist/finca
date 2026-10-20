@@ -1,4 +1,3 @@
-
 using FinanceTracker.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,45 +15,27 @@ public sealed class DatabaseInitializer(
         if (await db.Accounts.AnyAsync())
             return;
 
-        var organization = new Organization
+        var employer = new Organization
         {
             Name = "My Employer"
         };
 
-        var accounts = new[]
-        {
+        db.Organizations.Add(employer);
+
+        db.Accounts.AddRange(
             new Account
             {
-                Name = "Personal Funds",
-                Type = AccountType.PersonalFunds
+                Name = "Personal",
+                Type = AccountType.Personal
             },
             new Account
             {
-                Name = "Company Funds",
-                Type = AccountType.CompanyFunds,
-                OrganizationId = organization.Id
-            },
-            new Account
-            {
-                Name = "Company Owes Me",
-                Type = AccountType.Receivable,
-                OrganizationId = organization.Id
-            },
-            new Account
-            {
-                Name = "I Owe Company",
-                Type = AccountType.Payable,
-                OrganizationId = organization.Id
+                Name = "External",
+                Type = AccountType.External,
+                OrganizationId = employer.Id
             }
-        };
-
-        await using var transaction =
-            await db.Database.BeginTransactionAsync();
-
-        db.Organizations.Add(organization);
-        db.Accounts.AddRange(accounts);
+        );
 
         await db.SaveChangesAsync();
-        await transaction.CommitAsync();
     }
 }

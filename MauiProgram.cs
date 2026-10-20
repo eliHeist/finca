@@ -5,6 +5,7 @@ using FinanceTracker.Data;
 using FinanceTracker.Services;
 using FinanceTracker.Pages;
 using FinanceTracker.ViewModels;
+using FinanceTracker.Services;
 
 namespace FinanceTracker;
 
@@ -37,9 +38,12 @@ public static class MauiProgram
         );
 
         builder.Services.AddSingleton<DatabaseInitializer>();
+        builder.Services.AddSingleton<DefaultDataSeeder>();
         builder.Services.AddTransient<AccountService>();
         builder.Services.AddTransient<AccountsViewModel>();
         builder.Services.AddTransient<AccountsPage>();
+        builder.Services.AddTransient<TransactionService>();
+        builder.Services.AddSingleton<AccountDataUpgrade>();
 
         return builder.Build();
 	}

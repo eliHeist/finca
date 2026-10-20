@@ -1,4 +1,3 @@
-
 namespace FinanceTracker.Models;
 
 public sealed class Account
@@ -18,9 +17,6 @@ public sealed class Account
 
 public enum AccountType
 {
-    PersonalFunds,
-    CompanyFunds,
-    Receivable,
-    Payable,
-    ExternalSource
+    Personal,
+    External
 }

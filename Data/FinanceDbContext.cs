@@ -59,5 +59,8 @@ public sealed class FinanceDbContext(
 
         modelBuilder.Entity<LedgerEntry>()
             .HasIndex(x => x.TransactionId);
+
+        modelBuilder.Entity<FinanceTransaction>()
+            .HasIndex(x => x.RelatedTransactionId);
     }
 }
