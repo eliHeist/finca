@@ -21,6 +21,11 @@
             Title="Income"
             ContentTemplate="{DataTemplate local:IncomePage}"
             Route="IncomePage" />
+
+        <ShellContent
+            Title="Reports"
+            ContentTemplate="{DataTemplate local:ReportsPage}"
+            Route="ReportsPage" />
     </TabBar>
 
 </Shell>
