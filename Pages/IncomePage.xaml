@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FinanceTracker.Pages.IncomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Add Income">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="18">
+
+            <Label
+                Text="Add income"
+                FontSize="28"
+                FontAttributes="Bold" />
+
+            <Label Text="Amount (UGX)" />
+
+            <Entry
+                Placeholder="e.g. 500000"
+                Keyboard="Numeric"
+                Text="{Binding Amount}" />
+
+            <Label Text="Category" />
+
+            <Picker
+                Title="Choose category"
+                ItemsSource="{Binding Categories}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding SelectedCategory}" />
+
+            <Label Text="Date" />
+
+            <DatePicker Date="{Binding OccurredAt}" />
+
+            <Label Text="Description (optional)" />
+
+            <Entry
+                Placeholder="e.g. Salary, allowance or other income"
+                Text="{Binding Description}" />
+
+            <Button
+                Text="Save income"
+                Command="{Binding SaveCommand}" />
+
+            <ActivityIndicator
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}" />
+
+            <Label
+                Text="{Binding StatusMessage}"
+                LineBreakMode="WordWrap" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -45,6 +45,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<AccountDataUpgrade>();
         builder.Services.AddTransient<ExpenseViewModel>();
         builder.Services.AddTransient<ExpensePage>();
+        builder.Services.AddTransient<IncomeViewModel>();
+        builder.Services.AddTransient<IncomePage>();
 
         return builder.Build();
 	}

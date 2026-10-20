@@ -16,6 +16,11 @@
             Title="Add Expense"
             ContentTemplate="{DataTemplate local:ExpensePage}"
             Route="ExpensePage" />
+
+        <ShellContent
+            Title="Income"
+            ContentTemplate="{DataTemplate local:IncomePage}"
+            Route="IncomePage" />
     </TabBar>
 
 </Shell>
