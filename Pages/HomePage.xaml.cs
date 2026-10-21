@@ -19,15 +19,18 @@ public partial class HomePage : ContentPage
         await _viewModel.LoadAsync();
     }
 
-    private async void OnAddIncomeClicked(
-        object sender, EventArgs e)
+    private async void OnAddIncomeClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(IncomePage));
     }
 
-    private async void OnAddExpenseClicked(
-        object sender, EventArgs e)
+    private async void OnAddExpenseClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(ExpensePage));
+    }
+
+    private async void OnViewAllTransactionsClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(TransactionsPage));
     }
 }

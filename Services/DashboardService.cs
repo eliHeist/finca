@@ -7,18 +7,22 @@ namespace FinanceTracker.Services;
 public sealed class DashboardService(
     IDbContextFactory<FinanceDbContext> dbFactory)
 {
-    public async Task<List<RecentTransaction>> GetRecentAsync()
+    public Task<List<RecentTransaction>> GetRecentAsync() =>
+        GetTransactionsAsync(10);
+
+    public async Task<List<RecentTransaction>> GetTransactionsAsync(
+        int? limit = null)
     {
         await using var db = await dbFactory.CreateDbContextAsync();
 
-        var transactions = await db.Transactions
+        var query = db.Transactions
             .AsNoTracking()
-            .Where(t =>
-                t.IsPosted &&
-                !t.IsExternalFundingOffset)
-            .OrderByDescending(t => t.OccurredAt)
-            .Take(10)
-            .ToListAsync();
+            .Where(t => t.IsPosted && !t.IsExternalFundingOffset)
+            .OrderByDescending(t => t.OccurredAt);
+
+        var transactions = limit.HasValue
+            ? await query.Take(limit.Value).ToListAsync()
+            : await query.ToListAsync();
 
         var categoryIds = transactions
             .Where(t => t.CategoryId.HasValue)
@@ -38,26 +42,22 @@ public sealed class DashboardService(
         return transactions.Select(t =>
         {
             var category = t.CategoryId is Guid categoryId &&
-                           categories.TryGetValue(categoryId, out var name)
-                ? name
-                : t.Kind.ToString();
+                categories.TryGetValue(categoryId, out var categoryName)
+                    ? categoryName
+                    : t.Kind.ToString();
 
             var source = t.OrganizationId is Guid organizationId &&
-                         organizations.TryGetValue(organizationId, out var orgName)
-                ? orgName
-                : string.Empty;
-
-            var title = string.IsNullOrWhiteSpace(t.Description)
-                ? category
-                : t.Description;
+                organizations.TryGetValue(organizationId, out var sourceName)
+                    ? sourceName
+                    : string.Empty;
 
             return new RecentTransaction(
                 t.Id,
-                title,
+                string.IsNullOrWhiteSpace(t.Description)
+                    ? category
+                    : t.Description,
                 category,
-                t.Kind == TransactionKind.Income
-                    ? "Income"
-                    : "Expense",
+                t.Kind == TransactionKind.Income ? "Income" : "Expense",
                 t.Amount,
                 t.OccurredAt,
                 source);
