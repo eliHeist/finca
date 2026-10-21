@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FinanceTracker.Pages.HomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:FinanceTracker.ViewModels"
+    Title="Home">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <VerticalStackLayout Spacing="4">
+                <Label Text="My Finances"
+                       FontSize="28"
+                       FontAttributes="Bold" />
+                <Label Text="Your financial overview for this month"
+                       TextColor="Gray" />
+            </VerticalStackLayout>
+
+            <Border Padding="20"
+                    StrokeThickness="0"
+                    BackgroundColor="#172554"
+                    StrokeShape="RoundRectangle 16">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Total income + funds covered"
+                           TextColor="White"
+                           FontSize="14" />
+                    <Label Text="{Binding TotalFunds}"
+                           TextColor="White"
+                           FontSize="28"
+                           FontAttributes="Bold" />
+                    <Label Text="Genuine income plus externally covered expenses"
+                           TextColor="#DBEAFE"
+                           FontSize="12" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Grid ColumnDefinitions="*,*"
+                  RowDefinitions="Auto,Auto"
+                  ColumnSpacing="12"
+                  RowSpacing="12">
+
+                <Border Grid.Row="0" Grid.Column="0"
+                        Padding="14" Stroke="#D1D5DB"
+                        StrokeShape="RoundRectangle 12">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Genuine income" FontSize="12" />
+                        <Label Text="{Binding GenuineIncome}"
+                               FontAttributes="Bold" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Row="0" Grid.Column="1"
+                        Padding="14" Stroke="#D1D5DB"
+                        StrokeShape="RoundRectangle 12">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Personal expenses" FontSize="12" />
+                        <Label Text="{Binding PersonalExpenses}"
+                               FontAttributes="Bold" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="0"
+                        Padding="14" Stroke="#D1D5DB"
+                        StrokeShape="RoundRectangle 12">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="External expenses covered"
+                               FontSize="12" />
+                        <Label Text="{Binding ExternalExpenses}"
+                               FontAttributes="Bold" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="1"
+                        Padding="14" Stroke="#D1D5DB"
+                        StrokeShape="RoundRectangle 12">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Personal net" FontSize="12" />
+                        <Label Text="{Binding PersonalNet}"
+                               FontAttributes="Bold" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <Grid ColumnDefinitions="*,*"
+                  ColumnSpacing="12">
+                <Button Text="+ Add income"
+                        Clicked="OnAddIncomeClicked" />
+                <Button Grid.Column="1"
+                        Text="+ Add expense"
+                        Clicked="OnAddExpenseClicked" />
+            </Grid>
+
+            <Label Text="{Binding ErrorMessage}"
+                   TextColor="Red" />
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}" />
+
+            <Label Text="Recent transactions"
+                   FontSize="20"
+                   FontAttributes="Bold" />
+
+            <CollectionView ItemsSource="{Binding RecentTransactions}"
+                            SelectionMode="None">
+                <CollectionView.EmptyView>
+                    <Label Text="No transactions recorded yet."
+                           Padding="12"
+                           TextColor="Gray" />
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="*,Auto"
+                              Padding="0,12"
+                              ColumnSpacing="12">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="{Binding Title}"
+                                       FontAttributes="Bold" />
+                                <Label FontSize="12"
+                                       TextColor="Gray">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding Category}" />
+                                            <Span Text=" · " />
+                                            <Span Text="{Binding OccurredAt,
+                                                StringFormat='{0:dd MMM yyyy}'}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Text="{Binding SourceName}"
+                                       FontSize="12"
+                                       TextColor="Gray" />
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="1"
+                                                 Spacing="4"
+                                                 VerticalOptions="Center">
+                                <Label Text="{Binding Amount,
+                                    StringFormat='UGX {0:N0}'}"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="End" />
+                                <Label Text="{Binding Kind}"
+                                       FontSize="12"
+                                       HorizontalTextAlignment="End" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

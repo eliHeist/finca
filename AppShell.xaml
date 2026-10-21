@@ -8,24 +8,23 @@
 
     <TabBar>
         <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate local:HomePage}"
+            Route="HomePage" />
+
+        <ShellContent
             Title="Accounts"
             ContentTemplate="{DataTemplate local:AccountsPage}"
             Route="AccountsPage" />
 
-        <ShellContent
-            Title="Add Expense"
-            ContentTemplate="{DataTemplate local:ExpensePage}"
-            Route="ExpensePage" />
-
-        <ShellContent
-            Title="Income"
-            ContentTemplate="{DataTemplate local:IncomePage}"
-            Route="IncomePage" />
+        <!-- <ShellContent
+            Title="Sources"
+            ContentTemplate="{DataTemplate local:OrganizationsPage}"
+            Route="OrganizationsPage" /> -->
 
         <ShellContent
             Title="Reports"
             ContentTemplate="{DataTemplate local:ReportsPage}"
             Route="ReportsPage" />
     </TabBar>
-
 </Shell>

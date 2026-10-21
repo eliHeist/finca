@@ -50,6 +50,9 @@ public static class MauiProgram
         builder.Services.AddTransient<ReportService>();
         builder.Services.AddTransient<ReportsViewModel>();
         builder.Services.AddTransient<ReportsPage>();
+        builder.Services.AddTransient<DashboardService>();
+        builder.Services.AddTransient<HomeViewModel>();
+        builder.Services.AddTransient<HomePage>();
 
         return builder.Build();
 	}
