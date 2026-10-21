@@ -9,23 +9,24 @@ public sealed class ReportService(
 {
     public async Task<FinanceReport> GetReportAsync(
         DateTime startDate,
-        DateTime endDate,
-        long dailyAllowance,
-        int eligibleDays)
+        DateTime endDate)
     {
         if (startDate.Date > endDate.Date)
             throw new ArgumentException(
                 "Start date must be on or before end date.");
 
-        if (dailyAllowance < 0)
-            throw new ArgumentOutOfRangeException(
-                nameof(dailyAllowance));
-
-        if (eligibleDays < 0)
-            throw new ArgumentOutOfRangeException(
-                nameof(eligibleDays));
-
         await using var db = await dbFactory.CreateDbContextAsync();
+
+        var from = startDate.Date;
+        var until = endDate.Date.AddDays(1);
+
+        var transactions = await db.Transactions
+            .AsNoTracking()
+            .Where(t =>
+                t.IsPosted &&
+                t.OccurredAt >= from &&
+                t.OccurredAt < until)
+            .ToListAsync();
 
         var accounts = await db.Accounts
             .AsNoTracking()
@@ -41,16 +42,9 @@ public sealed class ReportService(
             .Select(a => a.Id)
             .ToHashSet();
 
-        var from = startDate.Date;
-        var until = endDate.Date.AddDays(1);
-
-        var transactions = await db.Transactions
+        var sources = await db.Organizations
             .AsNoTracking()
-            .Where(t =>
-                t.IsPosted &&
-                t.OccurredAt >= from &&
-                t.OccurredAt < until)
-            .ToListAsync();
+            .ToDictionaryAsync(o => o.Id, o => o.Name);
 
         var genuineIncome = transactions
             .Where(t =>
@@ -65,12 +59,25 @@ public sealed class ReportService(
                 personalAccountIds.Contains(t.SourceAccountId.Value))
             .Sum(t => t.Amount);
 
-        var externalExpenses = transactions
+        var externalExpenseTransactions = transactions
             .Where(t =>
                 t.Kind == TransactionKind.Expense &&
                 t.SourceAccountId.HasValue &&
                 externalAccountIds.Contains(t.SourceAccountId.Value))
-            .Sum(t => t.Amount);
+            .ToList();
+
+        var externalFunding = externalExpenseTransactions
+            .GroupBy(t => t.OrganizationId)
+            .Select(group => new ExternalFundingRow(
+                group.Key is Guid sourceId &&
+                    sources.TryGetValue(sourceId, out var name)
+                        ? name
+                        : "Unspecified source",
+                group.Sum(t => t.Amount)))
+            .OrderByDescending(row => row.Amount)
+            .ToList();
+
+        var externalExpenses = externalFunding.Sum(row => row.Amount);
 
         return new FinanceReport(
             from,
@@ -78,10 +85,14 @@ public sealed class ReportService(
             genuineIncome,
             personalExpenses,
             externalExpenses,
-            dailyAllowance * eligibleDays,
-            eligibleDays);
+            genuineIncome + externalExpenses,
+            externalFunding);
     }
 }
+
+public sealed record ExternalFundingRow(
+    string SourceName,
+    long Amount);
 
 public sealed record FinanceReport(
     DateTime StartDate,
@@ -89,12 +100,8 @@ public sealed record FinanceReport(
     long GenuineIncome,
     long PersonalExpenses,
     long ExternalExpenses,
-    long AllowanceEarned,
-    int EligibleDays)
+    long TotalFunds,
+    List<ExternalFundingRow> ExternalFunding)
 {
-    public long PersonalNet =>
-        GenuineIncome - PersonalExpenses;
-
-    public long AllowancePosition =>
-        AllowanceEarned - PersonalExpenses;
+    public long PersonalNet => GenuineIncome - PersonalExpenses;
 }
