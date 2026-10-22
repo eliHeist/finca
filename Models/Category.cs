@@ -1,4 +1,3 @@
-
 namespace FinanceTracker.Models;
 
 public sealed class Category

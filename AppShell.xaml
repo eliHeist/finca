@@ -23,6 +23,11 @@
             Route="OrganizationsPage" />
 
         <ShellContent
+            Title="Categories"
+            ContentTemplate="{DataTemplate local:CategoriesPage}"
+            Route="CategoriesPage" />
+
+        <ShellContent
             Title="Reports"
             ContentTemplate="{DataTemplate local:ReportsPage}"
             Route="ReportsPage" />

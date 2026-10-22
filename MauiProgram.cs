@@ -58,6 +58,9 @@ public static class MauiProgram
         builder.Services.AddTransient<OrganizationService>();
         builder.Services.AddTransient<OrganizationsViewModel>();
         builder.Services.AddTransient<OrganizationsPage>();
+        builder.Services.AddTransient<CategoryService>();
+        builder.Services.AddTransient<CategoriesViewModel>();
+        builder.Services.AddTransient<CategoriesPage>();
 
         return builder.Build();
 	}
