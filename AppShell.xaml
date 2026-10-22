@@ -17,10 +17,10 @@
             ContentTemplate="{DataTemplate local:AccountsPage}"
             Route="AccountsPage" />
 
-        <!-- <ShellContent
+        <ShellContent
             Title="Sources"
             ContentTemplate="{DataTemplate local:OrganizationsPage}"
-            Route="OrganizationsPage" /> -->
+            Route="OrganizationsPage" />
 
         <ShellContent
             Title="Reports"
