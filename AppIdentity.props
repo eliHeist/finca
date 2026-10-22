@@ -1,7 +1,7 @@
 <Project>
     <PropertyGroup>
         <!-- Change these values on your Beta branch -->
-        <ApplicationId>com.dakdot.financetracker.beta</ApplicationId>
+        <ApplicationId>com.dakdot.financetracker</ApplicationId>
         <ApplicationTitle>FT Beta</ApplicationTitle>
 
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -10,6 +10,6 @@
 
     <ItemGroup>
         <!-- Optional: Point to a distinct beta icon if you have one -->
-        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconbetafg.svg" Color="#F2390A" />
+        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F2390A" />
     </ItemGroup>
 </Project>
