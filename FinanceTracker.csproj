@@ -1,5 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+	<!-- Import branch-isolated identity settings -->
+    <Import Project="AppIdentity.props" />
+
 	<PropertyGroup>
 		<TargetFrameworks>net10.0-android</TargetFrameworks>
 
@@ -13,7 +16,7 @@
 
 		<ApplicationTitle>FT</ApplicationTitle>
 
-		<ApplicationId>com.dakdot.financetracker</ApplicationId>
+		<ApplicationId>com.dakdot.financetracker.beta</ApplicationId>
 
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
@@ -26,10 +29,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F2390A" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#322421" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
