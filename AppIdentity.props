@@ -9,7 +9,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <!-- Optional: Point to a distinct beta icon if you have one -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconbetafg.svg" Color="#F2390A" />
     </ItemGroup>
 </Project>
