@@ -1,3 +1,4 @@
+
 using FinanceTracker.Data;
 using FinanceTracker.Models;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,6 @@ public sealed class AccountService(
 
         var accounts = await db.Accounts
             .AsNoTracking()
-            .Where(a => a.IsActive)
             .OrderBy(a => a.Type)
             .ToListAsync();
 
@@ -58,10 +58,46 @@ public sealed class AccountService(
                 account.Id,
                 account.Name,
                 account.Type,
+                account.IsActive,
                 amount));
         }
 
         return results;
+    }
+
+    public async Task RenameAsync(Guid id, string name)
+    {
+        name = name.Trim();
+
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Account name is required.");
+
+        await using var db = await dbFactory.CreateDbContextAsync();
+
+        var account = await db.Accounts.FindAsync(id)
+            ?? throw new InvalidOperationException("Account not found.");
+
+        if (await db.Accounts.AnyAsync(a =>
+            a.Id != id &&
+            a.Name.ToLower() == name.ToLower()))
+        {
+            throw new InvalidOperationException(
+                "An account with this name already exists.");
+        }
+
+        account.Name = name;
+        await db.SaveChangesAsync();
+    }
+
+    public async Task SetActiveAsync(Guid id, bool isActive)
+    {
+        await using var db = await dbFactory.CreateDbContextAsync();
+
+        var account = await db.Accounts.FindAsync(id)
+            ?? throw new InvalidOperationException("Account not found.");
+
+        account.IsActive = isActive;
+        await db.SaveChangesAsync();
     }
 }
 
@@ -69,4 +105,5 @@ public sealed record AccountBalance(
     Guid Id,
     string Name,
     AccountType Type,
+    bool IsActive,
     long Balance);

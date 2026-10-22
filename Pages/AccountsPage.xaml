@@ -7,72 +7,85 @@
     x:DataType="vm:AccountsViewModel"
     Title="Accounts">
 
-    <Grid Padding="20" RowDefinitions="Auto,*" RowSpacing="16">
-        <VerticalStackLayout Spacing="4">
-            <Label
-                Text="Your accounts"
-                FontSize="28"
-                FontAttributes="Bold" />
+    <Grid Padding="20"
+          RowDefinitions="Auto,Auto,*"
+          RowSpacing="16">
 
-            <Label
-                Text="Track personal and company funds."
-                TextColor="Gray" />
+        <VerticalStackLayout Spacing="4">
+            <Label Text="Your accounts"
+                   FontSize="28"
+                   FontAttributes="Bold" />
+
+            <Label Text="Personal and external funding activity."
+                   TextColor="Gray" />
         </VerticalStackLayout>
 
-        <CollectionView
-            Grid.Row="1"
-            ItemsSource="{Binding Accounts}">
+        <Label Grid.Row="1"
+               Text="{Binding ErrorMessage}"
+               TextColor="Red" />
+
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Accounts}"
+                        SelectionMode="None">
 
             <CollectionView.EmptyView>
-                <VerticalStackLayout
-                    Padding="20"
-                    Spacing="8"
-                    VerticalOptions="Center">
-
-                    <ActivityIndicator IsRunning="{Binding IsBusy}" />
-
-                    <Label
-                        Text="No accounts found."
-                        HorizontalTextAlignment="Center" />
-                </VerticalStackLayout>
+                <Label Text="No accounts found."
+                       HorizontalTextAlignment="Center"
+                       VerticalOptions="Center" />
             </CollectionView.EmptyView>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:AccountRow">
-                    <Border
-                        Padding="16"
-                        Margin="0,0,0,10"
-                        Stroke="#DDDDDD"
-                        StrokeThickness="1">
+                    <Border Padding="16"
+                            Margin="0,0,0,12"
+                            Stroke="#DDDDDD"
+                            StrokeThickness="1">
 
-                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
-                            <Label
-                                Text="{Binding Name}"
-                                FontAttributes="Bold"
-                                FontSize="16" />
+                        <VerticalStackLayout Spacing="10">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="{Binding Name}"
+                                           FontSize="18"
+                                           FontAttributes="Bold" />
 
-                            <Label
-                                Grid.Row="1"
-                                Text="{Binding Type}"
-                                TextColor="Gray"
-                                FontSize="12" />
+                                    <Label Text="{Binding Type}"
+                                           TextColor="Gray"
+                                           FontSize="12" />
 
-                            <Label
-                                Grid.Column="1"
-                                Grid.RowSpan="2"
-                                Text="{Binding Balance}"
-                                VerticalOptions="Center"
-                                FontAttributes="Bold" />
-                        </Grid>
+                                    <Label Text="{Binding Description}"
+                                           TextColor="Gray"
+                                           FontSize="12" />
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Grid.Column="1"
+                                                     Spacing="4"
+                                                     HorizontalOptions="End">
+                                    <Label Text="{Binding Balance}"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="End" />
+
+                                    <Label Text="{Binding IsActive,
+                                        StringFormat='Active: {0}'}"
+                                           FontSize="12"
+                                           HorizontalTextAlignment="End" />
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="*,*"
+                                  ColumnSpacing="10">
+                                <Button Text="Rename"
+                                        Clicked="OnRenameClicked"
+                                        CommandParameter="{Binding .}" />
+
+                                <Button Grid.Column="1"
+                                        Text="{Binding StatusAction}"
+                                        Clicked="OnToggleActiveClicked"
+                                        CommandParameter="{Binding .}" />
+                            </Grid>
+                        </VerticalStackLayout>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-        <Label
-            Grid.Row="1"
-            Text="{Binding ErrorMessage}"
-            TextColor="Red"
-            VerticalOptions="End" />
     </Grid>
 </ContentPage>
