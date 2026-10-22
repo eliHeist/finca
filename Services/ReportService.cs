@@ -12,8 +12,10 @@ public sealed class ReportService(
         DateTime endDate)
     {
         if (startDate.Date > endDate.Date)
+        {
             throw new ArgumentException(
                 "Start date must be on or before end date.");
+        }
 
         await using var db = await dbFactory.CreateDbContextAsync();
 
@@ -28,6 +30,8 @@ public sealed class ReportService(
                 t.OccurredAt < until)
             .ToListAsync();
 
+        // Include inactive accounts so historical transactions
+        // remain part of reports.
         var accounts = await db.Accounts
             .AsNoTracking()
             .ToListAsync();
@@ -46,10 +50,15 @@ public sealed class ReportService(
             .AsNoTracking()
             .ToDictionaryAsync(o => o.Id, o => o.Name);
 
+        // Only genuine income credited to the Personal account.
+        // External funding offset-income is excluded.
         var genuineIncome = transactions
             .Where(t =>
                 t.Kind == TransactionKind.Income &&
-                !t.IsExternalFundingOffset)
+                !t.IsExternalFundingOffset &&
+                t.DestinationAccountId.HasValue &&
+                personalAccountIds.Contains(
+                    t.DestinationAccountId.Value))
             .Sum(t => t.Amount);
 
         var personalExpenses = transactions
@@ -70,9 +79,9 @@ public sealed class ReportService(
             .GroupBy(t => t.OrganizationId)
             .Select(group => new ExternalFundingRow(
                 group.Key is Guid sourceId &&
-                    sources.TryGetValue(sourceId, out var name)
-                        ? name
-                        : "Unspecified source",
+                sources.TryGetValue(sourceId, out var name)
+                    ? name
+                    : "Unspecified source",
                 group.Sum(t => t.Amount)))
             .OrderByDescending(row => row.Amount)
             .ToList();
