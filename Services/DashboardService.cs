@@ -45,12 +45,16 @@ public sealed class DashboardService(
                 categories.TryGetValue(categoryId, out var categoryName)
                     ? categoryName
                     : t.Kind.ToString();
-
+        
             var source = t.OrganizationId is Guid organizationId &&
                 organizations.TryGetValue(organizationId, out var sourceName)
                     ? sourceName
                     : string.Empty;
-
+        
+            var isExternallyFunded =
+                t.Kind == TransactionKind.Expense &&
+                t.OrganizationId.HasValue;
+        
             return new RecentTransaction(
                 t.Id,
                 string.IsNullOrWhiteSpace(t.Description)
@@ -60,7 +64,8 @@ public sealed class DashboardService(
                 t.Kind == TransactionKind.Income ? "Income" : "Expense",
                 t.Amount,
                 t.OccurredAt,
-                source);
+                source,
+                isExternallyFunded);
         }).ToList();
     }
 }
@@ -72,4 +77,5 @@ public sealed record RecentTransaction(
     string Kind,
     long Amount,
     DateTime OccurredAt,
-    string SourceName);
+    string SourceName,
+    bool IsExternallyFunded);
