@@ -2,6 +2,7 @@ using FinanceTracker.Services;
 using FinanceTracker.ViewModels;
 
 using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Maui.Views;
 
 namespace FinanceTracker.Pages;
@@ -22,7 +23,6 @@ public partial class TransactionsPage : ContentPage
         await _viewModel.LoadAsync();
     }
 
-    
     private async void OnOptionsClicked(object? sender, EventArgs e)
     {
         if (sender is not Button
@@ -34,22 +34,10 @@ public partial class TransactionsPage : ContentPage
         }
     
         var popup = new TransactionOptionsPopup();
+        var result = await this.ShowPopupAsync<bool>(popup);
     
-        var result = await this.ShowPopupAsync<bool>(
-            popup,
-            new PopupOptions
-            {
-                CanBeDismissedByTappingOutsideOfPopup = true,
-                PageOverlayColor = Colors.Transparent,
-                Shape = null,
-                Shadow = null
-            });
-    
-        if (result.WasDismissedByTappingOutsideOfPopup ||
-            result.Result != true)
-        {
+        if (result.Result != true)
             return;
-        }
     
         var confirmed = await DisplayAlertAsync(
             "Delete transaction",

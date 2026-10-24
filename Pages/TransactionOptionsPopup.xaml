@@ -35,7 +35,6 @@
                 TextColor="{StaticResource Error}"
                 FontSize="14"
                 HorizontalOptions="Fill"
-                HorizontalTextAlignment="Start"
                 Padding="12,10"
                 CornerRadius="10" />
 
@@ -46,7 +45,6 @@
                 TextColor="{StaticResource TextPrimary}"
                 FontSize="14"
                 HorizontalOptions="Fill"
-                HorizontalTextAlignment="Start"
                 Padding="12,10"
                 CornerRadius="10" />
 
