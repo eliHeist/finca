@@ -18,4 +18,10 @@ public partial class ExpensePage : ContentPage
         base.OnAppearing();
         await _viewModel.LoadAsync();
     }
+
+    private async void OnCancelClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//HomePage");
+    }
+
 }
