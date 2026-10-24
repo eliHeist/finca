@@ -7,6 +7,7 @@
     x:DataType="vm:OrganizationsViewModel"
     Title="Organizations"
     BackgroundColor="{StaticResource PageBackground}"
+    Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
 
     <Grid
