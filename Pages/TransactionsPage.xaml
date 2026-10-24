@@ -52,21 +52,12 @@
         </Grid>
 
         <!-- Error message -->
-        <Border
+        <Label
             Grid.Row="1"
-            IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}}"
-            Padding="12"
-            BackgroundColor="{StaticResource Surface}"
-            Stroke="{StaticResource Error}"
-            StrokeThickness="1"
-            StrokeShape="RoundRectangle 12">
-
-            <Label
-                Text="{Binding ErrorMessage}"
-                TextColor="{StaticResource Error}"
-                FontSize="13"
-                LineBreakMode="WordWrap" />
-        </Border>
+            Text="{Binding ErrorMessage}"
+            TextColor="{StaticResource Error}"
+            FontSize="13"
+            LineBreakMode="WordWrap" />
 
         <!-- Transactions list -->
         <CollectionView
@@ -196,7 +187,6 @@
                                     Text="{Binding SourceName}"
                                     FontSize="12"
                                     TextColor="{StaticResource Warning}"
-                                    IsVisible="{Binding SourceName, Converter={StaticResource StringNotEmptyConverter}}"
                                     LineBreakMode="WordWrap" />
 
                                 <Label
