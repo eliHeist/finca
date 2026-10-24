@@ -40,4 +40,9 @@ public partial class TransactionsPage : ContentPage
 
         await _viewModel.DeleteCommand.ExecuteAsync(item);
     }
+
+    private async void OnBackClicked(object sender, TappedEventArgs e)
+    {
+        await Shell.Current.GoToAsync("..", animate: true);
+    }
 }

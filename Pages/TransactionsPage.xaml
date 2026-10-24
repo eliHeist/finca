@@ -5,51 +5,56 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Transactions"
     BackgroundColor="{StaticResource PageBackground}"
+    Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
 
-    <Grid
-        Padding="22,28"
-        RowDefinitions="Auto,Auto,*"
-        RowSpacing="18">
+    <Grid Padding="22,28"
+          RowDefinitions="Auto,Auto,*"
+          RowSpacing="18">
 
         <!-- Header -->
-        <Grid ColumnDefinitions="Auto,*"
-              ColumnSpacing="14">
+        <VerticalStackLayout Grid.Row="0"
+                             Spacing="18">
 
+            <!-- Back button -->
             <Border
-                WidthRequest="52"
-                HeightRequest="52"
-                BackgroundColor="#2DF2390A"
-                StrokeThickness="0"
-                StrokeShape="RoundRectangle 16"
-                VerticalOptions="Center">
+                WidthRequest="44"
+                HeightRequest="44"
+                HorizontalOptions="Start"
+                BackgroundColor="{StaticResource Surface}"
+                Stroke="{StaticResource Border}"
+                StrokeThickness="1"
+                Padding="0">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="14" />
+                </Border.StrokeShape>
 
                 <Image
-                    Source="icons/building.svg"
-                    WidthRequest="26"
-                    HeightRequest="26"
+                    Source="icons/chevron_left.svg"
+                    WidthRequest="20"
+                    HeightRequest="20"
                     HorizontalOptions="Center"
                     VerticalOptions="Center" />
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackClicked" />
+                </Border.GestureRecognizers>
             </Border>
 
-            <VerticalStackLayout
-                Grid.Column="1"
-                Spacing="4"
-                VerticalOptions="Center">
-
+            <VerticalStackLayout Spacing="5">
                 <Label
                     Text="Transactions"
-                    FontSize="26"
+                    FontSize="30"
                     FontAttributes="Bold"
                     TextColor="{StaticResource TextPrimary}" />
 
                 <Label
-                    Text="Review your recorded income and expenses."
-                    FontSize="13"
-                    TextColor="{StaticResource TextMuted}"
-                    LineBreakMode="WordWrap" />
+                    Text="Review your income and expenses."
+                    FontSize="14"
+                    TextColor="{StaticResource TextMuted}" />
             </VerticalStackLayout>
-        </Grid>
+        </VerticalStackLayout>
 
         <!-- Error message -->
         <Label
@@ -59,7 +64,7 @@
             FontSize="13"
             LineBreakMode="WordWrap" />
 
-        <!-- Transactions list -->
+        <!-- Transaction list -->
         <CollectionView
             Grid.Row="2"
             ItemsSource="{Binding Transactions}"
@@ -68,40 +73,28 @@
             <CollectionView.EmptyView>
                 <VerticalStackLayout
                     Padding="24"
-                    Spacing="12"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center">
+                    Spacing="10"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
 
-                    <Border
-                        WidthRequest="64"
-                        HeightRequest="64"
-                        BackgroundColor="{StaticResource Surface}"
-                        Stroke="{StaticResource Border}"
-                        StrokeThickness="1"
-                        StrokeShape="RoundRectangle 20"
-                        HorizontalOptions="Center">
-
-                        <Image
-                            Source="icons/wallet.svg"
-                            WidthRequest="30"
-                            HeightRequest="30"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center" />
-                    </Border>
+                    <Image
+                        Source="icons/wallet.svg"
+                        WidthRequest="48"
+                        HeightRequest="48"
+                        HorizontalOptions="Center" />
 
                     <Label
                         Text="No transactions yet"
-                        FontSize="17"
+                        FontSize="18"
                         FontAttributes="Bold"
                         TextColor="{StaticResource TextPrimary}"
                         HorizontalTextAlignment="Center" />
 
                     <Label
-                        Text="Your recorded income and expenses will appear here."
+                        Text="Your income and expenses will appear here."
                         FontSize="13"
                         TextColor="{StaticResource TextMuted}"
-                        HorizontalTextAlignment="Center"
-                        LineBreakMode="WordWrap" />
+                        HorizontalTextAlignment="Center" />
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
 
@@ -109,147 +102,97 @@
                 <DataTemplate>
                     <Border
                         Margin="0,0,0,12"
-                        Padding="14"
+                        Padding="16"
                         BackgroundColor="{StaticResource Surface}"
                         Stroke="{StaticResource Border}"
-                        StrokeThickness="1"
-                        StrokeShape="RoundRectangle 16">
+                        StrokeThickness="1">
+
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="18" />
+                        </Border.StrokeShape>
 
                         <Grid
-                            ColumnDefinitions="Auto,*,Auto"
-                            ColumnSpacing="12">
-
-                            <!-- Transaction icon -->
-                            <Border
-                                WidthRequest="44"
-                                HeightRequest="44"
-                                BackgroundColor="#2035D995"
-                                StrokeThickness="0"
-                                StrokeShape="RoundRectangle 13"
-                                VerticalOptions="Start">
-
-                                <Image
-                                    Source="icons/income.svg"
-                                    WidthRequest="23"
-                                    HeightRequest="23"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center">
-
-                                    <Image.Triggers>
-                                        <DataTrigger
-                                            TargetType="Image"
-                                            Binding="{Binding Kind}"
-                                            Value="Expense">
-                                            <Setter
-                                                Property="Source"
-                                                Value="icons/expense.svg" />
-                                        </DataTrigger>
-                                    </Image.Triggers>
-                                </Image>
-
-                                <Border.Triggers>
-                                    <DataTrigger
-                                        TargetType="Border"
-                                        Binding="{Binding Kind}"
-                                        Value="Expense">
-                                        <Setter
-                                            Property="BackgroundColor"
-                                            Value="#2DF2390A" />
-                                    </DataTrigger>
-                                </Border.Triggers>
-                            </Border>
+                            ColumnDefinitions="*,Auto"
+                            RowDefinitions="Auto,Auto,Auto"
+                            ColumnSpacing="12"
+                            RowSpacing="6">
 
                             <!-- Transaction details -->
                             <VerticalStackLayout
-                                Grid.Column="1"
-                                Spacing="5">
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Spacing="4">
 
                                 <Label
                                     Text="{Binding Title}"
-                                    FontSize="15"
+                                    FontSize="16"
                                     FontAttributes="Bold"
                                     TextColor="{StaticResource TextPrimary}"
-                                    LineBreakMode="WordWrap" />
+                                    LineBreakMode="TailTruncation" />
 
                                 <Label
                                     Text="{Binding Category}"
-                                    FontSize="12"
-                                    TextColor="{StaticResource TextMuted}"
-                                    LineBreakMode="WordWrap" />
-
-                                <Label
-                                    Text="{Binding OccurredAt,
-                                        StringFormat='{0:dd MMM yyyy}'}"
-                                    FontSize="12"
+                                    FontSize="13"
                                     TextColor="{StaticResource TextMuted}" />
-
-                                <Label
-                                    Text="{Binding SourceName}"
-                                    FontSize="12"
-                                    TextColor="{StaticResource Warning}"
-                                    LineBreakMode="WordWrap" />
-
-                                <Label
-                                    Text="{Binding Kind}"
-                                    FontSize="11"
-                                    TextColor="{StaticResource Success}">
-
-                                    <Label.Triggers>
-                                        <DataTrigger
-                                            TargetType="Label"
-                                            Binding="{Binding Kind}"
-                                            Value="Expense">
-                                            <Setter
-                                                Property="TextColor"
-                                                Value="{StaticResource Accent}" />
-                                        </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
-
-                                <!-- Delete -->
-                                <Button
-                                    Text="Delete transaction"
-                                    FontSize="12"
-                                    Padding="10,5"
-                                    HeightRequest="34"
-                                    HorizontalOptions="Start"
-                                    BackgroundColor="Transparent"
-                                    TextColor="{StaticResource Error}"
-                                    BorderColor="{StaticResource Border}"
-                                    BorderWidth="1"
-                                    CornerRadius="10"
-                                    Clicked="OnDeleteClicked"
-                                    CommandParameter="{Binding .}" />
                             </VerticalStackLayout>
 
                             <!-- Amount -->
                             <Label
-                                Grid.Column="2"
-                                Text="{Binding Amount,
-                                    StringFormat='UGX {0:N0}'}"
-                                FontSize="14"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Text="{Binding Amount, StringFormat='UGX {0:N0}'}"
+                                FontSize="15"
                                 FontAttributes="Bold"
-                                TextColor="{StaticResource Success}"
+                                TextColor="{StaticResource TextPrimary}"
                                 HorizontalTextAlignment="End"
-                                VerticalOptions="Start"
-                                LineBreakMode="WordWrap">
+                                VerticalOptions="Start" />
 
-                                <Label.Triggers>
-                                    <DataTrigger
-                                        TargetType="Label"
-                                        Binding="{Binding Kind}"
-                                        Value="Expense">
-                                        <Setter
-                                            Property="TextColor"
-                                            Value="{StaticResource Accent}" />
-                                    </DataTrigger>
-                                </Label.Triggers>
-                            </Label>
+                            <!-- Type and date -->
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Text="{Binding Kind}"
+                                FontSize="12"
+                                TextColor="{StaticResource Accent}" />
+
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Text="{Binding OccurredAt, StringFormat='{0:dd MMM yyyy}'}"
+                                FontSize="12"
+                                TextColor="{StaticResource TextMuted}"
+                                HorizontalTextAlignment="End" />
+
+                            <!-- Source -->
+                            <Label
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Text="{Binding SourceName}"
+                                FontSize="12"
+                                TextColor="{StaticResource TextMuted}"
+                                LineBreakMode="TailTruncation" />
+
+                            <!-- Delete action -->
+                            <Button
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Text="Delete"
+                                Clicked="OnDeleteClicked"
+                                CommandParameter="{Binding .}"
+                                BackgroundColor="Transparent"
+                                TextColor="{StaticResource Error}"
+                                FontSize="12"
+                                Padding="10,4"
+                                HeightRequest="34"
+                                MinimumHeightRequest="34"
+                                MinimumWidthRequest="60"
+                                CornerRadius="10" />
 
                         </Grid>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
     </Grid>
 </ContentPage>

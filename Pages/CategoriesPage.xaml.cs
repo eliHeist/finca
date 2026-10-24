@@ -86,6 +86,6 @@ public partial class CategoriesPage : ContentPage
 
     private async void OnBackClicked(object sender, TappedEventArgs e)
     {
-        await Shell.Current.GoToAsync("//SettingsPage");
+        await Shell.Current.GoToAsync("..", animate: true);
     }
 }

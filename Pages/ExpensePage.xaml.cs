@@ -21,7 +21,7 @@ public partial class ExpensePage : ContentPage
 
     private async void OnCancelClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("//HomePage");
+        await Shell.Current.GoToAsync("..", animate: true);
     }
 
 }
