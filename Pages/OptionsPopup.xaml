@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="FinanceTracker.Pages.OptionsPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:TypeArguments="x:String"
+    Padding="0"
+    BackgroundColor="Transparent">
+
+    <Border
+        WidthRequest="300"
+        Padding="16"
+        BackgroundColor="{StaticResource Surface}"
+        StrokeThickness="0">
+
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="22" />
+        </Border.StrokeShape>
+
+        <VerticalStackLayout Spacing="4">
+
+            <Label
+                x:Name="PopupTitle"
+                Text="OPTIONS"
+                Margin="12,10,12,8"
+                FontSize="11"
+                CharacterSpacing="1.2"
+                FontAttributes="Bold"
+                HorizontalTextAlignment="Center"
+                TextColor="{StaticResource TextMuted}" />
+
+            <VerticalStackLayout
+                x:Name="OptionsLayout"
+                Spacing="3" />
+
+            <BoxView
+                HeightRequest="1"
+                Margin="4,4"
+                Color="{StaticResource Border}"
+                Opacity="0.5" />
+
+            <Button
+                Text="Cancel"
+                Clicked="OnCancelClicked"
+                BackgroundColor="Transparent"
+                TextColor="{StaticResource TextMuted}"
+                FontSize="14"
+                HorizontalOptions="Fill"
+                Padding="12,12"
+                CornerRadius="12" />
+
+        </VerticalStackLayout>
+    </Border>
+</toolkit:Popup>

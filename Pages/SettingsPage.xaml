@@ -213,59 +213,21 @@
             </VerticalStackLayout>
 
             <!-- About section -->
-            <VerticalStackLayout Spacing="12">
+            <VerticalStackLayout Spacing="8">
+
+                <Image
+                    Source="logo.png"
+                    WidthRequest="356"
+                    HeightRequest="356"
+                    Aspect="AspectFit"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
 
                 <Label
-                    Text="ABOUT"
+                    Text="by eliHeist"
                     FontSize="12"
                     FontAttributes="Bold"
                     TextColor="{StaticResource TextMuted}" />
-
-                <Border
-                    Padding="16"
-                    BackgroundColor="{StaticResource Surface}"
-                    Stroke="{StaticResource Border}"
-                    StrokeThickness="1"
-                    StrokeShape="RoundRectangle 16">
-
-                    <Grid ColumnDefinitions="52,*"
-                          ColumnSpacing="12">
-
-                        <Border
-                            WidthRequest="48"
-                            HeightRequest="48"
-                            BackgroundColor="#2AF2390A"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 12"
-                            VerticalOptions="Center">
-
-                            <Image
-                                Source="icons/credit_card.png"
-                                WidthRequest="24"
-                                HeightRequest="24"
-                                Aspect="AspectFit"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center" />
-                        </Border>
-
-                        <VerticalStackLayout
-                            Grid.Column="1"
-                            Spacing="4"
-                            VerticalOptions="Center">
-
-                            <Label
-                                Text="FinanceTracker"
-                                FontSize="16"
-                                FontAttributes="Bold"
-                                TextColor="{StaticResource TextPrimary}" />
-
-                            <Label
-                                Text="Personal finance tracking · Offline"
-                                FontSize="12"
-                                TextColor="{StaticResource TextMuted}" />
-                        </VerticalStackLayout>
-                    </Grid>
-                </Border>
 
             </VerticalStackLayout>
 

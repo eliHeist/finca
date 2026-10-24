@@ -52,17 +52,9 @@
         </Grid>
 
         <!-- Error message -->
-        <Border Grid.Row="1"
-                Padding="12"
-                BackgroundColor="{StaticResource Surface}"
-                Stroke="{StaticResource Error}"
-                StrokeThickness="1"
-                StrokeShape="RoundRectangle 12">
-
-            <Label Text="{Binding ErrorMessage}"
-                   TextColor="{StaticResource Error}"
-                   FontSize="13" />
-        </Border>
+        <Label Text="{Binding ErrorMessage}"
+                TextColor="{StaticResource Error}"
+                FontSize="13" />
 
         <!-- Accounts list -->
         <CollectionView Grid.Row="2"
@@ -107,8 +99,8 @@
                         <VerticalStackLayout Spacing="16">
 
                             <!-- Account details -->
-                            <Grid ColumnDefinitions="*,Auto"
-                                  ColumnSpacing="12">
+                            <Grid ColumnDefinitions="*,Auto,Auto"
+                                  ColumnSpacing="10">
 
                                 <VerticalStackLayout Spacing="6">
                                     <Label Text="{Binding Name}"
@@ -126,50 +118,34 @@
                                 </VerticalStackLayout>
 
                                 <VerticalStackLayout Grid.Column="1"
-                                                     Spacing="6"
-                                                     HorizontalOptions="End">
-
+                                                         Spacing="6"
+                                                         HorizontalOptions="End">
                                     <Label Text="{Binding Balance}"
-                                           FontSize="16"
-                                           FontAttributes="Bold"
-                                           TextColor="{StaticResource TextPrimary}"
-                                           HorizontalTextAlignment="End" />
-
-                                    <Label Text="{Binding IsActive,
-                                                StringFormat='Active: {0}'}"
-                                           FontSize="12"
-                                           TextColor="{StaticResource TextMuted}"
-                                           HorizontalTextAlignment="End" />
+                                            FontSize="16"
+                                            FontAttributes="Bold"
+                                            TextColor="{StaticResource TextPrimary}"
+                                            HorizontalTextAlignment="End" />
+                            
+                                    <Label Text="{Binding IsActive, StringFormat='Active: {0}'}"
+                                            FontSize="12"
+                                            TextColor="{StaticResource TextMuted}"
+                                            HorizontalTextAlignment="End" />
                                 </VerticalStackLayout>
-                            </Grid>
-
-                            <BoxView HeightRequest="1"
-                                     Color="{StaticResource Border}" />
-
-                            <!-- Account actions -->
-                            <Grid ColumnDefinitions="*,*"
-                                  ColumnSpacing="10">
-
-                                <Button Text="Rename"
-                                        Clicked="OnRenameClicked"
+                            
+                                <Button Grid.Column="2"
+                                        Text="⋮"
+                                        Clicked="OnOptionsClicked"
                                         CommandParameter="{Binding .}"
-                                        BackgroundColor="{StaticResource Surface}"
-                                        TextColor="{StaticResource TextPrimary}"
-                                        BorderColor="{StaticResource Border}"
-                                        BorderWidth="1"
-                                        CornerRadius="12"
-                                        HeightRequest="44" />
-
-                                <Button Grid.Column="1"
-                                        Text="{Binding StatusAction}"
-                                        Clicked="OnToggleActiveClicked"
-                                        CommandParameter="{Binding .}"
-                                        BackgroundColor="#2DF2390A"
-                                        TextColor="{StaticResource Accent}"
-                                        BorderColor="{StaticResource Accent}"
-                                        BorderWidth="1"
-                                        CornerRadius="12"
-                                        HeightRequest="44" />
+                                        BackgroundColor="Transparent"
+                                        TextColor="{StaticResource TextMuted}"
+                                        FontSize="22"
+                                        Padding="0"
+                                        WidthRequest="32"
+                                        HeightRequest="36"
+                                        MinimumWidthRequest="32"
+                                        MinimumHeightRequest="36"
+                                        CornerRadius="16"
+                                        VerticalOptions="Start" />
                             </Grid>
 
                         </VerticalStackLayout>

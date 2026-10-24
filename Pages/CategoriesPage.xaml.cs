@@ -1,6 +1,9 @@
 using FinanceTracker.Models;
 using FinanceTracker.ViewModels;
 
+using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Views;
+
 namespace FinanceTracker.Pages;
 
 public partial class CategoriesPage : ContentPage
@@ -44,42 +47,68 @@ public partial class CategoriesPage : ContentPage
             await _viewModel.CreateAsync(name, kind);
     }
 
-    private async void OnRenameClicked(object? sender, EventArgs e)
+    private async void OnOptionsClicked(object? sender, EventArgs e)
     {
         if (sender is not Button
             {
                 CommandParameter: CategoryRow category
             })
+        {
             return;
-
+        }
+    
+        var popup = new OptionsPopup(
+            "Category options",
+            new[]
+            {
+                new PopupOption("rename", "Rename category"),
+                new PopupOption(
+                    "toggle",
+                    category.IsActive
+                        ? "Deactivate category"
+                        : "Activate category")
+            });
+    
+        var result = await this.ShowPopupAsync<string>(popup);
+    
+        switch (result.Result)
+        {
+            case "rename":
+                await RenameCategoryAsync(category);
+                break;
+    
+            case "toggle":
+                await ToggleCategoryActiveAsync(category);
+                break;
+        }
+    }
+    
+    private async Task RenameCategoryAsync(CategoryRow category)
+    {
         var name = await DisplayPromptAsync(
             "Rename category",
-            "Enter the new name:",
+            "Enter the new category name:",
             initialValue: category.Name,
-            maxLength: 100);
-
-        if (name is not null)
-            await _viewModel.RenameAsync(category.Id, name);
-    }
-
-    private async void OnToggleActiveClicked(object? sender, EventArgs e)
-    {
-        if (sender is not Button
-            {
-                CommandParameter: CategoryRow category
-            })
+            maxLength: 60);
+    
+        if (name is null)
             return;
-
+    
+        await _viewModel.RenameAsync(category.Id, name);
+    }
+    
+    private async Task ToggleCategoryActiveAsync(CategoryRow category)
+    {
         var activate = !category.IsActive;
-
-        var confirmed = await DisplayAlert(
+    
+        var confirmed = await DisplayAlertAsync(
             activate ? "Activate category" : "Deactivate category",
             activate
                 ? $"Activate '{category.Name}'?"
-                : $"Deactivate '{category.Name}'? Existing transactions will keep their category.",
+                : $"Deactivate '{category.Name}'?",
             activate ? "Activate" : "Deactivate",
             "Cancel");
-
+    
         if (confirmed)
             await _viewModel.SetActiveAsync(category, activate);
     }

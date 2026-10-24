@@ -8,23 +8,25 @@
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
 
-    <Grid Padding="22,28"
+    <Grid Padding="22,24"
           RowDefinitions="Auto,Auto,*"
           RowSpacing="18">
 
-        <!-- Header -->
-        <VerticalStackLayout Grid.Row="0"
-                             Spacing="18">
+        <!-- Header: back button and text inline -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="44,*"
+              ColumnSpacing="14"
+              VerticalOptions="Center">
 
-            <!-- Back button -->
             <Border
+                Grid.Column="0"
                 WidthRequest="44"
                 HeightRequest="44"
-                HorizontalOptions="Start"
                 BackgroundColor="{StaticResource Surface}"
                 Stroke="{StaticResource Border}"
                 StrokeThickness="1"
-                Padding="0">
+                Padding="0"
+                VerticalOptions="Center">
 
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="14" />
@@ -42,19 +44,23 @@
                 </Border.GestureRecognizers>
             </Border>
 
-            <VerticalStackLayout Spacing="5">
+            <VerticalStackLayout
+                Grid.Column="1"
+                Spacing="3"
+                VerticalOptions="Center">
+
                 <Label
                     Text="Transactions"
-                    FontSize="30"
+                    FontSize="25"
                     FontAttributes="Bold"
                     TextColor="{StaticResource TextPrimary}" />
 
                 <Label
                     Text="Review your income and expenses."
-                    FontSize="14"
+                    FontSize="13"
                     TextColor="{StaticResource TextMuted}" />
             </VerticalStackLayout>
-        </VerticalStackLayout>
+        </Grid>
 
         <!-- Error message -->
         <Label
@@ -136,18 +142,42 @@
                                     TextColor="{StaticResource TextMuted}" />
                             </VerticalStackLayout>
 
-                            <!-- Amount -->
-                            <Label
+                            <!-- Amount and options -->
+                            <Grid
                                 Grid.Row="0"
                                 Grid.Column="1"
-                                Text="{Binding Amount, StringFormat='UGX {0:N0}'}"
-                                FontSize="15"
-                                FontAttributes="Bold"
-                                TextColor="{StaticResource TextPrimary}"
-                                HorizontalTextAlignment="End"
-                                VerticalOptions="Start" />
+                                ColumnDefinitions="Auto,32"
+                                ColumnSpacing="8"
+                                HorizontalOptions="End"
+                                VerticalOptions="Start">
 
-                            <!-- Type and date -->
+                                <Label
+                                    Grid.Column="0"
+                                    Text="{Binding Amount, StringFormat='UGX {0:N0}'}"
+                                    FontSize="14"
+                                    FontAttributes="Bold"
+                                    TextColor="{StaticResource TextPrimary}"
+                                    VerticalOptions="Center"
+                                    HorizontalTextAlignment="End" />
+
+                                <Button
+                                    Grid.Column="1"
+                                    Text="⋮"
+                                    Clicked="OnOptionsClicked"
+                                    CommandParameter="{Binding .}"
+                                    BackgroundColor="Transparent"
+                                    TextColor="{StaticResource TextMuted}"
+                                    FontSize="22"
+                                    Padding="0"
+                                    HeightRequest="32"
+                                    WidthRequest="32"
+                                    MinimumHeightRequest="32"
+                                    MinimumWidthRequest="32"
+                                    CornerRadius="16"
+                                    VerticalOptions="Center" />
+                            </Grid>
+
+                            <!-- Type -->
                             <Label
                                 Grid.Row="1"
                                 Grid.Column="0"
@@ -155,6 +185,7 @@
                                 FontSize="12"
                                 TextColor="{StaticResource Accent}" />
 
+                            <!-- Date -->
                             <Label
                                 Grid.Row="1"
                                 Grid.Column="1"
@@ -167,26 +198,11 @@
                             <Label
                                 Grid.Row="2"
                                 Grid.Column="0"
+                                Grid.ColumnSpan="2"
                                 Text="{Binding SourceName}"
                                 FontSize="12"
                                 TextColor="{StaticResource TextMuted}"
                                 LineBreakMode="TailTruncation" />
-
-                            <!-- Delete action -->
-                            <Button
-                                Grid.Row="2"
-                                Grid.Column="1"
-                                Text="Delete"
-                                Clicked="OnDeleteClicked"
-                                CommandParameter="{Binding .}"
-                                BackgroundColor="Transparent"
-                                TextColor="{StaticResource Error}"
-                                FontSize="12"
-                                Padding="10,4"
-                                HeightRequest="34"
-                                MinimumHeightRequest="34"
-                                MinimumWidthRequest="60"
-                                CornerRadius="10" />
 
                         </Grid>
                     </Border>
