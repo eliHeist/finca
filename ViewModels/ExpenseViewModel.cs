@@ -112,6 +112,7 @@ public partial class ExpenseViewModel(
         finally
         {
             IsBusy = false;
+            await Shell.Current.GoToAsync("//HomePage");
         }
     }
 }

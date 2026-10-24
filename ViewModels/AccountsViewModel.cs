@@ -1,3 +1,4 @@
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinanceTracker.Models;
@@ -43,9 +44,12 @@ public partial class AccountsViewModel(
                 };
 
                 Accounts.Add(new AccountRow(
+                    account.Id,
                     account.Name,
+                    account.Type.ToString(),
                     label,
-                    FormatMoney(account.Balance)));
+                    FormatMoney(account.Balance),
+                    account.IsActive));
             }
         }
         catch (Exception ex)
@@ -58,11 +62,45 @@ public partial class AccountsViewModel(
         }
     }
 
+    public async Task RenameAsync(Guid id, string name)
+    {
+        try
+        {
+            ErrorMessage = string.Empty;
+            await accountService.RenameAsync(id, name);
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+    }
+
+    public async Task SetActiveAsync(AccountRow account, bool isActive)
+    {
+        try
+        {
+            ErrorMessage = string.Empty;
+            await accountService.SetActiveAsync(account.Id, isActive);
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+    }
+
     private static string FormatMoney(long amount) =>
         $"UGX {amount.ToString("N0", CultureInfo.InvariantCulture)}";
 }
 
 public sealed record AccountRow(
+    Guid Id,
     string Name,
     string Type,
-    string Balance);
+    string Description,
+    string Balance,
+    bool IsActive)
+{
+    public string StatusAction => IsActive ? "Deactivate" : "Activate";
+}

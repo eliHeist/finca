@@ -3,52 +3,218 @@
     x:Class="FinanceTracker.Pages.IncomePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Add Income">
+    Title="Add Income"
+    BackgroundColor="{StaticResource PageBackground}"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
 
     <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="18">
+        <VerticalStackLayout Padding="22,28" Spacing="24">
 
+            <!-- Header -->
+            <Grid ColumnDefinitions="Auto,*"
+                  ColumnSpacing="14"
+                  VerticalOptions="Center">
+
+                <Border
+                    WidthRequest="52"
+                    HeightRequest="52"
+                    BackgroundColor="#2DF2390A"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 16"
+                    VerticalOptions="Center">
+
+                    <Image
+                        Source="icons/income.svg"
+                        WidthRequest="26"
+                        HeightRequest="26"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+                </Border>
+
+                <VerticalStackLayout
+                    Grid.Column="1"
+                    Spacing="4"
+                    VerticalOptions="Center">
+
+                    <Label
+                        Text="Add income"
+                        FontSize="26"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource TextPrimary}" />
+
+                    <Label
+                        Text="Record money received."
+                        FontSize="14"
+                        TextColor="{StaticResource TextMuted}" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- Amount -->
+            <VerticalStackLayout Spacing="10">
+                <Label
+                    Text="Amount"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource TextPrimary}" />
+
+                <Border
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Border}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 14"
+                    Padding="16,10">
+
+                    <Grid ColumnDefinitions="Auto,*"
+                          ColumnSpacing="12">
+
+                        <Label
+                            Text="UGX"
+                            FontSize="15"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource Accent}"
+                            VerticalOptions="Center" />
+
+                        <Entry
+                            Grid.Column="1"
+                            Text="{Binding Amount}"
+                            Placeholder="0"
+                            PlaceholderColor="{StaticResource TextMuted}"
+                            TextColor="{StaticResource TextPrimary}"
+                            Keyboard="Numeric"
+                            FontSize="22"
+                            FontAttributes="Bold"
+                            BackgroundColor="Transparent"
+                            ClearButtonVisibility="WhileEditing" />
+                    </Grid>
+                </Border>
+
+                <Label
+                    Text="Enter the amount you actually received."
+                    FontSize="12"
+                    TextColor="{StaticResource TextMuted}" />
+            </VerticalStackLayout>
+
+            <!-- Category -->
+            <VerticalStackLayout Spacing="10">
+                <Label
+                    Text="Category"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource TextPrimary}" />
+
+                <Border
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Border}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 14"
+                    Padding="12,2">
+
+                    <Picker
+                        Title="Choose a category"
+                        TitleColor="{StaticResource TextMuted}"
+                        ItemsSource="{Binding Categories}"
+                        ItemDisplayBinding="{Binding Name}"
+                        SelectedItem="{Binding SelectedCategory}"
+                        TextColor="{StaticResource TextPrimary}"
+                        BackgroundColor="Transparent" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Date -->
+            <VerticalStackLayout Spacing="10">
+                <Label
+                    Text="Date received"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource TextPrimary}" />
+
+                <Border
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Border}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 14"
+                    Padding="12,2">
+
+                    <DatePicker
+                        Date="{Binding OccurredAt}"
+                        TextColor="{StaticResource TextPrimary}"
+                        BackgroundColor="Transparent"
+                        Format="dd MMM yyyy" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Description -->
+            <VerticalStackLayout Spacing="10">
+                <Label
+                    Text="Description"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource TextPrimary}" />
+
+                <Border
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Border}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 14"
+                    Padding="14,4">
+
+                    <Entry
+                        Text="{Binding Description}"
+                        Placeholder="e.g. Salary, business income"
+                        PlaceholderColor="{StaticResource TextMuted}"
+                        TextColor="{StaticResource TextPrimary}"
+                        BackgroundColor="Transparent"
+                        ClearButtonVisibility="WhileEditing" />
+                </Border>
+
+                <Label
+                    Text="Optional — add a note to help identify this income later."
+                    FontSize="12"
+                    TextColor="{StaticResource TextMuted}" />
+            </VerticalStackLayout>
+
+            <!-- Status -->
             <Label
-                Text="Add income"
-                FontSize="28"
-                FontAttributes="Bold" />
+                Text="{Binding StatusMessage}"
+                TextColor="{StaticResource TextMuted}"
+                FontSize="13"
+                LineBreakMode="WordWrap" />
 
-            <Label Text="Amount (UGX)" />
+            <!-- Actions -->
+            <Grid
+                ColumnDefinitions="*,*"
+                ColumnSpacing="12">
 
-            <Entry
-                Placeholder="e.g. 500000"
-                Keyboard="Numeric"
-                Text="{Binding Amount}" />
+                <Button
+                    Text="Cancel"
+                    Clicked="OnCancelClicked"
+                    BackgroundColor="{StaticResource Surface}"
+                    TextColor="{StaticResource TextPrimary}"
+                    BorderColor="{StaticResource Border}"
+                    BorderWidth="1"
+                    FontSize="15"
+                    FontAttributes="Bold"
+                    CornerRadius="16"
+                    HeightRequest="54" />
 
-            <Label Text="Category" />
-
-            <Picker
-                Title="Choose category"
-                ItemsSource="{Binding Categories}"
-                ItemDisplayBinding="{Binding Name}"
-                SelectedItem="{Binding SelectedCategory}" />
-
-            <Label Text="Date" />
-
-            <DatePicker Date="{Binding OccurredAt}" />
-
-            <Label Text="Description (optional)" />
-
-            <Entry
-                Placeholder="e.g. Salary, allowance or other income"
-                Text="{Binding Description}" />
-
-            <Button
-                Text="Save income"
-                Command="{Binding SaveCommand}" />
+                <Button
+                    Grid.Column="1"
+                    Text="Save expense"
+                    Command="{Binding SaveCommand}"
+                    BackgroundColor="{StaticResource Accent}"
+                    TextColor="White"
+                    FontSize="15"
+                    FontAttributes="Bold"
+                    CornerRadius="16"
+                    HeightRequest="54" />
+            </Grid>
 
             <ActivityIndicator
                 IsRunning="{Binding IsBusy}"
-                IsVisible="{Binding IsBusy}" />
-
-            <Label
-                Text="{Binding StatusMessage}"
-                LineBreakMode="WordWrap" />
+                IsVisible="{Binding IsBusy}"
+                Color="{StaticResource Accent}"
+                HorizontalOptions="Center" />
 
         </VerticalStackLayout>
     </ScrollView>

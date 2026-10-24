@@ -3,71 +3,196 @@
     x:Class="FinanceTracker.Pages.TransactionsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Transactions">
+    Title="Transactions"
+    BackgroundColor="{StaticResource PageBackground}"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
 
-    <Grid Padding="16" RowDefinitions="Auto,Auto,*">
-        <Label Text="All transactions"
-               FontSize="26"
-               FontAttributes="Bold" />
+    <Grid Padding="22,28"
+          RowDefinitions="Auto,Auto,*"
+          RowSpacing="18">
 
-        <Label Grid.Row="1"
-               Text="{Binding ErrorMessage}"
-               TextColor="Red"
-               Margin="0,8" />
+        <!-- Header -->
+        <VerticalStackLayout Grid.Row="0"
+                             Spacing="18">
 
-        <CollectionView Grid.Row="2"
-                        ItemsSource="{Binding Transactions}"
-                        SelectionMode="None">
+            <!-- Back button -->
+            <Border
+                WidthRequest="44"
+                HeightRequest="44"
+                HorizontalOptions="Start"
+                BackgroundColor="{StaticResource Surface}"
+                Stroke="{StaticResource Border}"
+                StrokeThickness="1"
+                Padding="0">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="14" />
+                </Border.StrokeShape>
+
+                <Image
+                    Source="icons/chevron_left.svg"
+                    WidthRequest="20"
+                    HeightRequest="20"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackClicked" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <VerticalStackLayout Spacing="5">
+                <Label
+                    Text="Transactions"
+                    FontSize="30"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource TextPrimary}" />
+
+                <Label
+                    Text="Review your income and expenses."
+                    FontSize="14"
+                    TextColor="{StaticResource TextMuted}" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+
+        <!-- Error message -->
+        <Label
+            Grid.Row="1"
+            Text="{Binding ErrorMessage}"
+            TextColor="{StaticResource Error}"
+            FontSize="13"
+            LineBreakMode="WordWrap" />
+
+        <!-- Transaction list -->
+        <CollectionView
+            Grid.Row="2"
+            ItemsSource="{Binding Transactions}"
+            SelectionMode="None">
+
             <CollectionView.EmptyView>
-                <Label Text="No transactions recorded yet."
-                       TextColor="Gray"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center" />
+                <VerticalStackLayout
+                    Padding="24"
+                    Spacing="10"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+
+                    <Image
+                        Source="icons/wallet.svg"
+                        WidthRequest="48"
+                        HeightRequest="48"
+                        HorizontalOptions="Center" />
+
+                    <Label
+                        Text="No transactions yet"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource TextPrimary}"
+                        HorizontalTextAlignment="Center" />
+
+                    <Label
+                        Text="Your income and expenses will appear here."
+                        FontSize="13"
+                        TextColor="{StaticResource TextMuted}"
+                        HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
             </CollectionView.EmptyView>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border Padding="12"
-                            Margin="0,4"
-                            Stroke="#D1D5DB"
-                            StrokeShape="RoundRectangle 12">
-                        <Grid ColumnDefinitions="*,Auto"
-                              ColumnSpacing="12">
-                            <VerticalStackLayout Spacing="5">
-                                <Label Text="{Binding Title}"
-                                       FontAttributes="Bold" />
-                                <Label Text="{Binding Category}"
-                                       FontSize="12"
-                                       TextColor="Gray" />
-                                <Label Text="{Binding OccurredAt,
-                                    StringFormat='{0:dd MMM yyyy}'}"
-                                       FontSize="12"
-                                       TextColor="Gray" />
-                                <Label Text="{Binding SourceName}"
-                                       FontSize="12"
-                                       TextColor="Gray" />
-                                <Label Text="{Binding Kind}"
-                                       FontSize="12" />
+                    <Border
+                        Margin="0,0,0,12"
+                        Padding="16"
+                        BackgroundColor="{StaticResource Surface}"
+                        Stroke="{StaticResource Border}"
+                        StrokeThickness="1">
+
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="18" />
+                        </Border.StrokeShape>
+
+                        <Grid
+                            ColumnDefinitions="*,Auto"
+                            RowDefinitions="Auto,Auto,Auto"
+                            ColumnSpacing="12"
+                            RowSpacing="6">
+
+                            <!-- Transaction details -->
+                            <VerticalStackLayout
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Spacing="4">
+
+                                <Label
+                                    Text="{Binding Title}"
+                                    FontSize="16"
+                                    FontAttributes="Bold"
+                                    TextColor="{StaticResource TextPrimary}"
+                                    LineBreakMode="TailTruncation" />
+
+                                <Label
+                                    Text="{Binding Category}"
+                                    FontSize="13"
+                                    TextColor="{StaticResource TextMuted}" />
                             </VerticalStackLayout>
 
-                            <VerticalStackLayout Grid.Column="1"
-                                                 Spacing="10"
-                                                 VerticalOptions="Center">
-                                <Label Text="{Binding Amount,
-                                    StringFormat='UGX {0:N0}'}"
-                                       FontAttributes="Bold"
-                                       HorizontalTextAlignment="End" />
+                            <!-- Amount -->
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Text="{Binding Amount, StringFormat='UGX {0:N0}'}"
+                                FontSize="15"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource TextPrimary}"
+                                HorizontalTextAlignment="End"
+                                VerticalOptions="Start" />
 
-                                <Button Text="Delete"
-                                        FontSize="12"
-                                        Padding="10,4"
-                                        Clicked="OnDeleteClicked"
-                                        CommandParameter="{Binding .}" />
-                            </VerticalStackLayout>
+                            <!-- Type and date -->
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Text="{Binding Kind}"
+                                FontSize="12"
+                                TextColor="{StaticResource Accent}" />
+
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Text="{Binding OccurredAt, StringFormat='{0:dd MMM yyyy}'}"
+                                FontSize="12"
+                                TextColor="{StaticResource TextMuted}"
+                                HorizontalTextAlignment="End" />
+
+                            <!-- Source -->
+                            <Label
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Text="{Binding SourceName}"
+                                FontSize="12"
+                                TextColor="{StaticResource TextMuted}"
+                                LineBreakMode="TailTruncation" />
+
+                            <!-- Delete action -->
+                            <Button
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Text="Delete"
+                                Clicked="OnDeleteClicked"
+                                CommandParameter="{Binding .}"
+                                BackgroundColor="Transparent"
+                                TextColor="{StaticResource Error}"
+                                FontSize="12"
+                                Padding="10,4"
+                                HeightRequest="34"
+                                MinimumHeightRequest="34"
+                                MinimumWidthRequest="60"
+                                CornerRadius="10" />
+
                         </Grid>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
     </Grid>
 </ContentPage>

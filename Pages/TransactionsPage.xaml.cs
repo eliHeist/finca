@@ -1,5 +1,5 @@
-using FinanceTracker.ViewModels;
 using FinanceTracker.Services;
+using FinanceTracker.ViewModels;
 
 namespace FinanceTracker.Pages;
 
@@ -10,8 +10,7 @@ public partial class TransactionsPage : ContentPage
     public TransactionsPage(TransactionsViewModel viewModel)
     {
         InitializeComponent();
-        _viewModel = viewModel;
-        BindingContext = viewModel;
+        BindingContext = _viewModel = viewModel;
     }
 
     protected override async void OnAppearing()
@@ -20,18 +19,30 @@ public partial class TransactionsPage : ContentPage
         await _viewModel.LoadAsync();
     }
 
-    private async void OnDeleteClicked(object sender, EventArgs e)
+    private async void OnDeleteClicked(object? sender, EventArgs e)
     {
-        if (sender is not Button { BindingContext: RecentTransaction item })
+        if (sender is not Button
+            {
+                CommandParameter: RecentTransaction item
+            })
+        {
             return;
-    
+        }
+
         var confirmed = await DisplayAlertAsync(
             "Delete transaction",
             $"Delete '{item.Title}'? This action cannot be undone.",
             "Delete",
             "Cancel");
-    
-        if (confirmed)
-            await _viewModel.DeleteCommand.ExecuteAsync(item);
+
+        if (!confirmed)
+            return;
+
+        await _viewModel.DeleteCommand.ExecuteAsync(item);
+    }
+
+    private async void OnBackClicked(object sender, TappedEventArgs e)
+    {
+        await Shell.Current.GoToAsync("..", animate: true);
     }
 }

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FinanceTracker.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Settings"
+    BackgroundColor="{StaticResource PageBackground}"
+    Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,24" Spacing="24">
+
+            <!-- Header -->
+            <VerticalStackLayout Spacing="6">
+                <Label
+                    Text="Settings"
+                    FontSize="30"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource TextPrimary}" />
+
+                <Label
+                    Text="Manage your finance tracker"
+                    FontSize="14"
+                    TextColor="{StaticResource TextMuted}" />
+            </VerticalStackLayout>
+
+            <!-- Management section -->
+            <VerticalStackLayout Spacing="12">
+
+                <Label
+                    Text="MANAGEMENT"
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource TextMuted}" />
+
+                <!-- Accounts -->
+                <Border
+                    Padding="16"
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Border}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 16">
+
+                    <Grid ColumnDefinitions="52,*,Auto"
+                          ColumnSpacing="12">
+
+                        <Border
+                            WidthRequest="48"
+                            HeightRequest="48"
+                            BackgroundColor="#2AF2390A"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12"
+                            VerticalOptions="Center">
+
+                            <Image
+                                Source="icons/credit_card.png"
+                                WidthRequest="24"
+                                HeightRequest="24"
+                                Aspect="AspectFit"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                        </Border>
+
+                        <VerticalStackLayout
+                            Grid.Column="1"
+                            Spacing="4"
+                            VerticalOptions="Center">
+
+                            <Label
+                                Text="Accounts"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource TextPrimary}" />
+
+                            <Label
+                                Text="Manage Personal and External accounts"
+                                FontSize="12"
+                                TextColor="{StaticResource TextMuted}" />
+                        </VerticalStackLayout>
+
+                        <Image
+                            Grid.Column="2"
+                            Source="icons/chevron_right.png"
+                            WidthRequest="18"
+                            HeightRequest="18"
+                            VerticalOptions="Center" />
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Tapped="OnAccountsTapped" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </Border>
+
+                <!-- Sources -->
+                <Border
+                    Padding="16"
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Border}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 16">
+
+                    <Grid ColumnDefinitions="52,*,Auto"
+                          ColumnSpacing="12">
+
+                        <Border
+                            WidthRequest="48"
+                            HeightRequest="48"
+                            BackgroundColor="#2AF2390A"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12"
+                            VerticalOptions="Center">
+
+                            <Image
+                                Source="icons/domain.png"
+                                WidthRequest="24"
+                                HeightRequest="24"
+                                Aspect="AspectFit"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                        </Border>
+
+                        <VerticalStackLayout
+                            Grid.Column="1"
+                            Spacing="4"
+                            VerticalOptions="Center">
+
+                            <Label
+                                Text="Sources"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource TextPrimary}" />
+
+                            <Label
+                                Text="Manage funding organizations"
+                                FontSize="12"
+                                TextColor="{StaticResource TextMuted}" />
+                        </VerticalStackLayout>
+
+                        <Image
+                            Grid.Column="2"
+                            Source="icons/chevron_right.png"
+                            WidthRequest="18"
+                            HeightRequest="18"
+                            VerticalOptions="Center" />
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Tapped="OnSourcesTapped" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </Border>
+
+                <!-- Categories -->
+                <Border
+                    Padding="16"
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Border}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 16">
+
+                    <Grid ColumnDefinitions="52,*,Auto"
+                          ColumnSpacing="12">
+
+                        <Border
+                            WidthRequest="48"
+                            HeightRequest="48"
+                            BackgroundColor="#2AF2390A"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12"
+                            VerticalOptions="Center">
+
+                            <Image
+                                Source="icons/category.png"
+                                WidthRequest="24"
+                                HeightRequest="24"
+                                Aspect="AspectFit"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                        </Border>
+
+                        <VerticalStackLayout
+                            Grid.Column="1"
+                            Spacing="4"
+                            VerticalOptions="Center">
+
+                            <Label
+                                Text="Categories"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource TextPrimary}" />
+
+                            <Label
+                                Text="Organize income and expense categories"
+                                FontSize="12"
+                                TextColor="{StaticResource TextMuted}" />
+                        </VerticalStackLayout>
+
+                        <Image
+                            Grid.Column="2"
+                            Source="icons/chevron_right.png"
+                            WidthRequest="18"
+                            HeightRequest="18"
+                            VerticalOptions="Center" />
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Tapped="OnCategoriesTapped" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </Border>
+
+            </VerticalStackLayout>
+
+            <!-- About section -->
+            <VerticalStackLayout Spacing="12">
+
+                <Label
+                    Text="ABOUT"
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource TextMuted}" />
+
+                <Border
+                    Padding="16"
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Border}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 16">
+
+                    <Grid ColumnDefinitions="52,*"
+                          ColumnSpacing="12">
+
+                        <Border
+                            WidthRequest="48"
+                            HeightRequest="48"
+                            BackgroundColor="#2AF2390A"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12"
+                            VerticalOptions="Center">
+
+                            <Image
+                                Source="icons/credit_card.png"
+                                WidthRequest="24"
+                                HeightRequest="24"
+                                Aspect="AspectFit"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                        </Border>
+
+                        <VerticalStackLayout
+                            Grid.Column="1"
+                            Spacing="4"
+                            VerticalOptions="Center">
+
+                            <Label
+                                Text="FinanceTracker"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource TextPrimary}" />
+
+                            <Label
+                                Text="Personal finance tracking · Offline"
+                                FontSize="12"
+                                TextColor="{StaticResource TextMuted}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

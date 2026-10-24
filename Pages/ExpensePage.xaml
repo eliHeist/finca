@@ -3,96 +3,324 @@
     x:Class="FinanceTracker.Pages.ExpensePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Add Expense">
+    Title="Add Expense"
+    BackgroundColor="{StaticResource PageBackground}"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
 
     <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="18">
+        <VerticalStackLayout Padding="22,28" Spacing="24">
 
-            <Label
-                Text="Add expense"
-                FontSize="28"
-                FontAttributes="Bold" />
+            <!-- Header -->
+            <Grid ColumnDefinitions="Auto,*"
+                  ColumnSpacing="14"
+                  VerticalOptions="Center">
 
-            <Label Text="Amount (UGX)" />
+                <Border
+                    WidthRequest="52"
+                    HeightRequest="52"
+                    BackgroundColor="#2DF2390A"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 16"
+                    VerticalOptions="Center">
 
-            <Entry
-                Placeholder="e.g. 15000"
-                Keyboard="Numeric"
-                Text="{Binding Amount}" />
+                    <Image
+                        Source="icons/expense.svg"
+                        WidthRequest="26"
+                        HeightRequest="26"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+                </Border>
 
-            <Label Text="Category" />
+                <VerticalStackLayout
+                    Grid.Column="1"
+                    Spacing="4"
+                    VerticalOptions="Center">
 
-            <Picker
-                Title="Choose category"
-                ItemsSource="{Binding Categories}"
-                ItemDisplayBinding="{Binding Name}"
-                SelectedItem="{Binding SelectedCategory}" />
+                    <Label
+                        Text="Add expense"
+                        FontSize="26"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource TextPrimary}" />
 
-            <Label Text="Date" />
+                    <Label
+                        Text="Record money you spent."
+                        FontSize="14"
+                        TextColor="{StaticResource TextMuted}" />
+                </VerticalStackLayout>
+            </Grid>
 
-            <DatePicker Date="{Binding OccurredAt}" />
+            <!-- Amount -->
+            <VerticalStackLayout Spacing="10">
+                <Label
+                    Text="Amount"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource TextPrimary}" />
 
-            <Label Text="Description (optional)" />
+                <Border
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Border}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 14"
+                    Padding="16,10">
 
-            <Entry
-                Placeholder="What did you spend on?"
-                Text="{Binding Description}" />
+                    <Grid ColumnDefinitions="Auto,*"
+                          ColumnSpacing="12">
 
+                        <Label
+                            Text="UGX"
+                            FontSize="15"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource Accent}"
+                            VerticalOptions="Center" />
+
+                        <Entry
+                            Grid.Column="1"
+                            Text="{Binding Amount}"
+                            Placeholder="0"
+                            PlaceholderColor="{StaticResource TextMuted}"
+                            TextColor="{StaticResource TextPrimary}"
+                            Keyboard="Numeric"
+                            FontSize="22"
+                            FontAttributes="Bold"
+                            BackgroundColor="Transparent"
+                            ClearButtonVisibility="WhileEditing" />
+                    </Grid>
+                </Border>
+
+                <Label
+                    Text="Enter the total amount spent."
+                    FontSize="12"
+                    TextColor="{StaticResource TextMuted}" />
+            </VerticalStackLayout>
+
+            <!-- Category -->
+            <VerticalStackLayout Spacing="10">
+                <Label
+                    Text="Category"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource TextPrimary}" />
+
+                <Border
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Border}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 14"
+                    Padding="12,2">
+
+                    <Picker
+                        Title="Choose a category"
+                        TitleColor="{StaticResource TextMuted}"
+                        ItemsSource="{Binding Categories}"
+                        ItemDisplayBinding="{Binding Name}"
+                        SelectedItem="{Binding SelectedCategory}"
+                        TextColor="{StaticResource TextPrimary}"
+                        BackgroundColor="Transparent" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Date -->
+            <VerticalStackLayout Spacing="10">
+                <Label
+                    Text="Date spent"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource TextPrimary}" />
+
+                <Border
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Border}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 14"
+                    Padding="12,2">
+
+                    <DatePicker
+                        Date="{Binding OccurredAt}"
+                        TextColor="{StaticResource TextPrimary}"
+                        BackgroundColor="Transparent"
+                        Format="dd MMM yyyy" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Description -->
+            <VerticalStackLayout Spacing="10">
+                <Label
+                    Text="Description"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource TextPrimary}" />
+
+                <Border
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Border}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 14"
+                    Padding="14,4">
+
+                    <Entry
+                        Text="{Binding Description}"
+                        Placeholder="e.g. Groceries, transport"
+                        PlaceholderColor="{StaticResource TextMuted}"
+                        TextColor="{StaticResource TextPrimary}"
+                        BackgroundColor="Transparent"
+                        ClearButtonVisibility="WhileEditing" />
+                </Border>
+
+                <Label
+                    Text="Optional — add details to help identify this expense."
+                    FontSize="12"
+                    TextColor="{StaticResource TextMuted}" />
+            </VerticalStackLayout>
+
+            <!-- External funding -->
             <Border
                 Padding="16"
-                Stroke="{AppThemeBinding Light=#D1D5DB, Dark=#4B5563}"
+                BackgroundColor="{StaticResource Surface}"
+                Stroke="{StaticResource Border}"
                 StrokeThickness="1"
-                StrokeShape="RoundRectangle 12">
+                StrokeShape="RoundRectangle 16">
 
-                <VerticalStackLayout Spacing="12">
+                <VerticalStackLayout Spacing="16">
 
-                    <Label
-                        Text="External funding"
-                        FontSize="18"
-                        FontAttributes="Bold" />
+                    <Grid ColumnDefinitions="Auto,*"
+                          ColumnSpacing="12">
 
-                    <Label
-                        Text="Enable this when an employer or another source covers the expense."
-                        FontSize="13" />
+                        <Border
+                            WidthRequest="42"
+                            HeightRequest="42"
+                            BackgroundColor="#2DF5B942"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12"
+                            VerticalOptions="Center">
 
-                    <HorizontalStackLayout Spacing="12">
-                        <Switch
-                            IsToggled="{Binding IsExternallyFunded}"
-                            VerticalOptions="Center" />
+                            <Image
+                                Source="icons/building.svg"
+                                WidthRequest="22"
+                                HeightRequest="22"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                        </Border>
+
+                        <VerticalStackLayout
+                            Grid.Column="1"
+                            Spacing="4"
+                            VerticalOptions="Center">
+
+                            <Label
+                                Text="External funding"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource TextPrimary}" />
+
+                            <Label
+                                Text="Was this expense covered by an employer or another source?"
+                                FontSize="12"
+                                TextColor="{StaticResource TextMuted}"
+                                LineBreakMode="WordWrap" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,Auto"
+                          ColumnSpacing="12">
 
                         <Label
                             Text="Externally funded"
+                            FontSize="14"
+                            TextColor="{StaticResource TextPrimary}"
                             VerticalOptions="Center" />
-                    </HorizontalStackLayout>
+
+                        <Switch
+                            Grid.Column="1"
+                            IsToggled="{Binding IsExternallyFunded}"
+                            OnColor="{StaticResource Accent}"
+                            VerticalOptions="Center" />
+                    </Grid>
+
+                    <BoxView
+                        HeightRequest="1"
+                        Color="{StaticResource Border}"
+                        IsVisible="{Binding IsExternallyFunded}" />
 
                     <VerticalStackLayout
-                        Spacing="8"
+                        Spacing="10"
                         IsVisible="{Binding IsExternallyFunded}">
 
-                        <Label Text="Funding source" />
+                        <Label
+                            Text="Funding source"
+                            FontSize="14"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource TextPrimary}" />
 
-                        <Picker
-                            Title="Choose source"
-                            ItemsSource="{Binding Sources}"
-                            ItemDisplayBinding="{Binding Name}"
-                            SelectedItem="{Binding SelectedSource}" />
+                        <Border
+                            BackgroundColor="{StaticResource PageBackground}"
+                            Stroke="{StaticResource Border}"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="12,2">
 
+                            <Picker
+                                Title="Choose a source"
+                                TitleColor="{StaticResource TextMuted}"
+                                ItemsSource="{Binding Sources}"
+                                ItemDisplayBinding="{Binding Name}"
+                                SelectedItem="{Binding SelectedSource}"
+                                TextColor="{StaticResource TextPrimary}"
+                                BackgroundColor="Transparent" />
+                        </Border>
+
+                        <Label
+                            Text="The expense will be associated with this source in your reports."
+                            FontSize="12"
+                            TextColor="{StaticResource TextMuted}"
+                            LineBreakMode="WordWrap" />
                     </VerticalStackLayout>
 
                 </VerticalStackLayout>
             </Border>
 
-            <Button
-                Text="Save expense"
-                Command="{Binding SaveCommand}" />
+            <!-- Status -->
+            <Label
+                Text="{Binding StatusMessage}"
+                TextColor="{StaticResource TextMuted}"
+                FontSize="13"
+                LineBreakMode="WordWrap" />
+
+            <!-- Actions -->
+            <Grid
+                ColumnDefinitions="*,*"
+                ColumnSpacing="12">
+
+                <Button
+                    Text="Cancel"
+                    Clicked="OnCancelClicked"
+                    BackgroundColor="{StaticResource Surface}"
+                    TextColor="{StaticResource TextPrimary}"
+                    BorderColor="{StaticResource Border}"
+                    BorderWidth="1"
+                    FontSize="15"
+                    FontAttributes="Bold"
+                    CornerRadius="16"
+                    HeightRequest="54" />
+
+                <Button
+                    Grid.Column="1"
+                    Text="Save expense"
+                    Command="{Binding SaveCommand}"
+                    BackgroundColor="{StaticResource Accent}"
+                    TextColor="White"
+                    FontSize="15"
+                    FontAttributes="Bold"
+                    CornerRadius="16"
+                    HeightRequest="54" />
+            </Grid>
 
             <ActivityIndicator
                 IsRunning="{Binding IsBusy}"
-                IsVisible="{Binding IsBusy}" />
-
-            <Label
-                Text="{Binding StatusMessage}"
-                LineBreakMode="WordWrap" />
+                IsVisible="{Binding IsBusy}"
+                Color="{StaticResource Accent}"
+                HorizontalOptions="Center" />
 
         </VerticalStackLayout>
     </ScrollView>

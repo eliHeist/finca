@@ -91,6 +91,7 @@ public partial class IncomeViewModel(
         finally
         {
             IsBusy = false;
+            await Shell.Current.GoToAsync("//HomePage");
         }
     }
 }
