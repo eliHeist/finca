@@ -4,152 +4,507 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:FinanceTracker.ViewModels"
-    Title="Home">
+    BackgroundColor="{StaticResource PageBackground}">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
+        <VerticalStackLayout Padding="20,24,20,28" Spacing="24">
 
-            <VerticalStackLayout Spacing="4">
-                <Label Text="My Finances"
-                       FontSize="28"
-                       FontAttributes="Bold" />
-                <Label Text="Your financial overview for this month"
-                       TextColor="Gray" />
-            </VerticalStackLayout>
+            <!-- Header -->
+            <Grid ColumnDefinitions="*,Auto"
+                  ColumnSpacing="12">
 
-            <Border Padding="20"
-                    StrokeThickness="0"
-                    BackgroundColor="#172554"
-                    StrokeShape="RoundRectangle 16">
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="Total income + funds covered"
-                           TextColor="White"
-                           FontSize="14" />
-                    <Label Text="{Binding TotalFunds}"
-                           TextColor="White"
-                           FontSize="28"
-                           FontAttributes="Bold" />
-                    <Label Text="Genuine income plus externally covered expenses"
-                           TextColor="#DBEAFE"
-                           FontSize="12" />
+                <VerticalStackLayout Spacing="5"
+                                     VerticalOptions="Center">
+                    <Label Text="MY FINANCES"
+                           FontSize="12"
+                           CharacterSpacing="2"
+                           TextColor="{StaticResource TextMuted}" />
+
+                    <Label Text="Your money."
+                           FontSize="30"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}" />
+
+                    <Label Text="Your financial overview"
+                           FontSize="14"
+                           TextColor="{StaticResource TextMuted}" />
                 </VerticalStackLayout>
+
+                <Border Grid.Column="1"
+                        WidthRequest="48"
+                        HeightRequest="48"
+                        BackgroundColor="{StaticResource Surface}"
+                        Stroke="{StaticResource Border}"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 16"
+                        VerticalOptions="Center">
+                    <Image Source="icons/wallet.png"
+                           WidthRequest="24"
+                           HeightRequest="24"
+                           Aspect="AspectFit"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Border>
+            </Grid>
+
+            <!-- Total funds hero card -->
+            <Border Padding="22"
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Border}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 24">
+
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto"
+                      RowSpacing="16">
+
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="TOTAL FUNDS TRACKED"
+                               FontSize="11"
+                               CharacterSpacing="1.5"
+                               TextColor="{StaticResource TextMuted}"
+                               VerticalOptions="Center" />
+
+                        <Border Grid.Column="1"
+                                Padding="10,6"
+                                BackgroundColor="#25F2390A"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 20">
+                            <Label Text="OVERVIEW"
+                                   FontSize="9"
+                                   CharacterSpacing="1"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource Accent}" />
+                        </Border>
+                    </Grid>
+
+                    <Label Grid.Row="1"
+                           Text="{Binding TotalFunds, StringFormat='UGX {0:N0}'}"
+                           FontSize="32"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}"
+                           LineBreakMode="WordWrap" />
+
+                    <BoxView Grid.Row="2"
+                             HeightRequest="1"
+                             Color="{StaticResource Border}" />
+
+                    <Grid Grid.Row="3"
+                          ColumnDefinitions="*,Auto"
+                          ColumnSpacing="12">
+
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Genuine income"
+                                   FontSize="12"
+                                   TextColor="{StaticResource TextMuted}" />
+                            <Label Text="{Binding GenuineIncome, StringFormat='UGX {0:N0}'}"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource Success}" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Column="1"
+                                             Spacing="5"
+                                             HorizontalOptions="End">
+                            <Label Text="Externally covered"
+                                   FontSize="12"
+                                   TextColor="{StaticResource TextMuted}"
+                                   HorizontalTextAlignment="End" />
+                            <Label Text="{Binding ExternalExpenses, StringFormat='UGX {0:N0}'}"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource Accent}"
+                                   HorizontalTextAlignment="End" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Grid>
             </Border>
 
-            <Grid ColumnDefinitions="*,*"
-                  RowDefinitions="Auto,Auto"
-                  ColumnSpacing="12"
-                  RowSpacing="12">
+            <!-- Financial summary -->
+            <VerticalStackLayout Spacing="14">
+                <Label Text="Financial summary"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource TextPrimary}" />
 
-                <Border Grid.Row="0" Grid.Column="0"
-                        Padding="14" Stroke="#D1D5DB"
-                        StrokeShape="RoundRectangle 12">
-                    <VerticalStackLayout Spacing="6">
-                        <Label Text="Genuine income" FontSize="12" />
-                        <Label Text="{Binding GenuineIncome}"
-                               FontAttributes="Bold" />
-                    </VerticalStackLayout>
-                </Border>
+                <Grid ColumnDefinitions="*,*"
+                      RowDefinitions="Auto,Auto"
+                      ColumnSpacing="12"
+                      RowSpacing="12">
 
-                <Border Grid.Row="0" Grid.Column="1"
-                        Padding="14" Stroke="#D1D5DB"
-                        StrokeShape="RoundRectangle 12">
-                    <VerticalStackLayout Spacing="6">
-                        <Label Text="Personal expenses" FontSize="12" />
-                        <Label Text="{Binding PersonalExpenses}"
-                               FontAttributes="Bold" />
-                    </VerticalStackLayout>
-                </Border>
+                    <!-- Genuine income -->
+                    <Border Grid.Row="0"
+                            Grid.Column="0"
+                            Padding="15"
+                            BackgroundColor="{StaticResource Surface}"
+                            Stroke="{StaticResource Border}"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 18">
+                        <VerticalStackLayout Spacing="12">
+                            <Border WidthRequest="38"
+                                    HeightRequest="38"
+                                    HorizontalOptions="Start"
+                                    BackgroundColor="#2535D995"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 12">
+                                <Image Source="icons/income.png"
+                                       WidthRequest="20"
+                                       HeightRequest="20"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
+                            </Border>
 
-                <Border Grid.Row="1" Grid.Column="0"
-                        Padding="14" Stroke="#D1D5DB"
-                        StrokeShape="RoundRectangle 12">
-                    <VerticalStackLayout Spacing="6">
-                        <Label Text="External expenses covered"
-                               FontSize="12" />
-                        <Label Text="{Binding ExternalExpenses}"
-                               FontAttributes="Bold" />
-                    </VerticalStackLayout>
-                </Border>
+                            <Label Text="Genuine income"
+                                   FontSize="12"
+                                   TextColor="{StaticResource TextMuted}" />
 
-                <Border Grid.Row="1" Grid.Column="1"
-                        Padding="14" Stroke="#D1D5DB"
-                        StrokeShape="RoundRectangle 12">
-                    <VerticalStackLayout Spacing="6">
-                        <Label Text="Personal net" FontSize="12" />
-                        <Label Text="{Binding PersonalNet}"
-                               FontAttributes="Bold" />
-                    </VerticalStackLayout>
-                </Border>
-            </Grid>
+                            <Label Text="{Binding GenuineIncome, StringFormat='UGX {0:N0}'}"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource Success}"
+                                   LineBreakMode="WordWrap" />
+                        </VerticalStackLayout>
+                    </Border>
 
-            <Grid ColumnDefinitions="*,*"
+                    <!-- Personal expenses -->
+                    <Border Grid.Row="0"
+                            Grid.Column="1"
+                            Padding="15"
+                            BackgroundColor="{StaticResource Surface}"
+                            Stroke="{StaticResource Border}"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 18">
+                        <VerticalStackLayout Spacing="12">
+                            <Border WidthRequest="38"
+                                    HeightRequest="38"
+                                    HorizontalOptions="Start"
+                                    BackgroundColor="#25F2390A"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 12">
+                                <Image Source="icons/expense.png"
+                                       WidthRequest="20"
+                                       HeightRequest="20"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
+                            </Border>
+
+                            <Label Text="Personal expenses"
+                                   FontSize="12"
+                                   TextColor="{StaticResource TextMuted}" />
+
+                            <Label Text="{Binding PersonalExpenses, StringFormat='UGX {0:N0}'}"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource TextPrimary}"
+                                   LineBreakMode="WordWrap" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- External expenses -->
+                    <Border Grid.Row="1"
+                            Grid.Column="0"
+                            Padding="15"
+                            BackgroundColor="{StaticResource Surface}"
+                            Stroke="{StaticResource Border}"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 18">
+                        <VerticalStackLayout Spacing="12">
+                            <Border WidthRequest="38"
+                                    HeightRequest="38"
+                                    HorizontalOptions="Start"
+                                    BackgroundColor="#25F5B942"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 12">
+                                <Image Source="icons/building.png"
+                                       WidthRequest="20"
+                                       HeightRequest="20"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
+                            </Border>
+
+                            <Label Text="Externally covered"
+                                   FontSize="12"
+                                   TextColor="{StaticResource TextMuted}" />
+
+                            <Label Text="{Binding ExternalExpenses, StringFormat='UGX {0:N0}'}"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource TextPrimary}"
+                                   LineBreakMode="WordWrap" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Personal net -->
+                    <Border Grid.Row="1"
+                            Grid.Column="1"
+                            Padding="15"
+                            BackgroundColor="{StaticResource Surface}"
+                            Stroke="{StaticResource Border}"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 18">
+                        <VerticalStackLayout Spacing="12">
+                            <Border WidthRequest="38"
+                                    HeightRequest="38"
+                                    HorizontalOptions="Start"
+                                    BackgroundColor="#2535D995"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 12">
+                                <Image Source="icons/wallet.png"
+                                       WidthRequest="20"
+                                       HeightRequest="20"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
+                            </Border>
+
+                            <Label Text="Personal net"
+                                   FontSize="12"
+                                   TextColor="{StaticResource TextMuted}" />
+
+                            <Label Text="{Binding PersonalNet, StringFormat='UGX {0:N0}'}"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource TextPrimary}"
+                                   LineBreakMode="WordWrap" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </VerticalStackLayout>
+
+            <!-- Quick actions -->
+            <VerticalStackLayout Spacing="12">
+                <Label Text="Quick actions"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource TextPrimary}" />
+
+                <Grid ColumnDefinitions="*,*"
+                      ColumnSpacing="12">
+
+                    <Button Text="+  Add income"
+                            Clicked="OnAddIncomeClicked"
+                            BackgroundColor="{StaticResource Accent}"
+                            TextColor="{StaticResource White}"
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            HeightRequest="52"
+                            CornerRadius="16"
+                            Padding="10,0" />
+
+                    <Button Grid.Column="1"
+                            Text="−  Add expense"
+                            Clicked="OnAddExpenseClicked"
+                            BackgroundColor="{StaticResource Surface}"
+                            TextColor="{StaticResource TextPrimary}"
+                            BorderColor="{StaticResource Border}"
+                            BorderWidth="1"
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            HeightRequest="52"
+                            CornerRadius="16"
+                            Padding="10,0" />
+                </Grid>
+            </VerticalStackLayout>
+
+            <!-- Loading and errors -->
+            <VerticalStackLayout Spacing="8">
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}"
+                                   Color="{StaticResource Accent}" />
+
+                <Label Text="{Binding ErrorMessage}"
+                       TextColor="{StaticResource Error}"
+                       FontSize="13" />
+            </VerticalStackLayout>
+
+            <!-- Recent transactions heading and view-all action -->
+            <Grid ColumnDefinitions="*,Auto"
                   ColumnSpacing="12">
-                <Button Text="+ Add income"
-                        Clicked="OnAddIncomeClicked" />
+
+                <VerticalStackLayout Spacing="4"
+                                     VerticalOptions="Center">
+                    <Label Text="Recent transactions"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}" />
+
+                    <Label Text="Your latest financial activity"
+                           FontSize="12"
+                           TextColor="{StaticResource TextMuted}" />
+                </VerticalStackLayout>
+
                 <Button Grid.Column="1"
-                        Text="+ Add expense"
-                        Clicked="OnAddExpenseClicked" />
+                        Text="View all  ›"
+                        Clicked="OnViewAllTransactionsClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource Accent}"
+                        FontAttributes="Bold"
+                        FontSize="13"
+                        Padding="4,8"
+                        VerticalOptions="Center" />
             </Grid>
 
-            <Label Text="{Binding ErrorMessage}"
-                   TextColor="Red" />
-
-            <ActivityIndicator IsRunning="{Binding IsBusy}"
-                               IsVisible="{Binding IsBusy}" />
-
-            <Button Text="View all transactions"
-                    Clicked="OnViewAllTransactionsClicked"
-                    BackgroundColor="Transparent"
-                    TextColor="{AppThemeBinding Light=#1D4ED8, Dark=#93C5FD}" />
-
-            <Label Text="Recent transactions"
-                   FontSize="20"
-                   FontAttributes="Bold" />
-
+            <!-- Transaction list -->
             <CollectionView ItemsSource="{Binding RecentTransactions}"
-                            SelectionMode="None">
+                            SelectionMode="None"
+                            VerticalScrollBarVisibility="Never">
+
                 <CollectionView.EmptyView>
-                    <Label Text="No transactions recorded yet."
-                           Padding="12"
-                           TextColor="Gray" />
+                    <Border Padding="24"
+                            BackgroundColor="{StaticResource Surface}"
+                            Stroke="{StaticResource Border}"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 18">
+                        <VerticalStackLayout Spacing="10"
+                                             HorizontalOptions="Center">
+                            <Image Source="icons/wallet.png"
+                                   WidthRequest="36"
+                                   HeightRequest="36"
+                                   Opacity="0.7" />
+
+                            <Label Text="No transactions yet"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource TextPrimary}"
+                                   HorizontalTextAlignment="Center" />
+
+                            <Label Text="Your income and expenses will appear here."
+                                   FontSize="13"
+                                   TextColor="{StaticResource TextMuted}"
+                                   HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
                 </CollectionView.EmptyView>
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid ColumnDefinitions="*,Auto"
-                              Padding="0,12"
-                              ColumnSpacing="12">
-                            <VerticalStackLayout Spacing="4">
-                                <Label Text="{Binding Title}"
-                                       FontAttributes="Bold" />
-                                <Label FontSize="12"
-                                       TextColor="Gray">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span Text="{Binding Category}" />
-                                            <Span Text=" · " />
-                                            <Span Text="{Binding OccurredAt,
-                                                StringFormat='{0:dd MMM yyyy}'}" />
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
-                                <Label Text="{Binding SourceName}"
-                                       FontSize="12"
-                                       TextColor="Gray" />
-                            </VerticalStackLayout>
+                        <Border Padding="12"
+                                Margin="0,0,0,10"
+                                BackgroundColor="{StaticResource Surface}"
+                                Stroke="{StaticResource Border}"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 18">
 
-                            <VerticalStackLayout Grid.Column="1"
-                                                 Spacing="4"
-                                                 VerticalOptions="Center">
-                                <Label Text="{Binding Amount,
-                                    StringFormat='UGX {0:N0}'}"
-                                       FontAttributes="Bold"
-                                       HorizontalTextAlignment="End" />
-                                <Label Text="{Binding Kind}"
-                                       FontSize="12"
-                                       HorizontalTextAlignment="End" />
-                            </VerticalStackLayout>
-                        </Grid>
+                            <Grid ColumnDefinitions="44,*,Auto"
+                                  ColumnSpacing="12">
+
+                                <!-- Transaction type icon -->
+                                <Border Grid.Column="0"
+                                        WidthRequest="44"
+                                        HeightRequest="44"
+                                        VerticalOptions="Center"
+                                        BackgroundColor="#2535D995"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 14">
+                                
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border"
+                                                     Binding="{Binding Kind}"
+                                                     Value="Expense">
+                                            <Setter Property="BackgroundColor"
+                                                    Value="#25F2390A" />
+                                        </DataTrigger>
+                                
+                                        <DataTrigger TargetType="Border"
+                                                     Binding="{Binding IsExternallyFunded}"
+                                                     Value="True">
+                                            <Setter Property="BackgroundColor"
+                                                    Value="#25F5B942" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                
+                                    <Image Source="icons/income.png"
+                                           WidthRequest="21"
+                                           HeightRequest="21"
+                                           Aspect="AspectFit"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center">
+                                
+                                        <Image.Triggers>
+                                            <DataTrigger TargetType="Image"
+                                                         Binding="{Binding Kind}"
+                                                         Value="Expense">
+                                                <Setter Property="Source"
+                                                        Value="icons/expense.png" />
+                                            </DataTrigger>
+                                
+                                            <DataTrigger TargetType="Image"
+                                                         Binding="{Binding IsExternallyFunded}"
+                                                         Value="True">
+                                                <Setter Property="Source"
+                                                        Value="icons/building.png" />
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+                                </Border>
+
+                                <!-- Transaction details -->
+                                <VerticalStackLayout Grid.Column="1"
+                                                     Spacing="5"
+                                                     VerticalOptions="Center">
+
+                                    <Label Text="{Binding Title}"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           TextColor="{StaticResource TextPrimary}"
+                                           LineBreakMode="TailTruncation"
+                                           MaxLines="1" />
+
+                                    <Label FontSize="11"
+                                           TextColor="{StaticResource TextMuted}"
+                                           LineBreakMode="TailTruncation"
+                                           MaxLines="1">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding Category}" />
+                                                <Span Text=" · " />
+                                                <Span Text="{Binding OccurredAt,
+                                                    StringFormat='{0:dd MMM yyyy}'}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Label Text="{Binding SourceName}"
+                                           FontSize="11"
+                                           TextColor="{StaticResource TextMuted}"
+                                           LineBreakMode="TailTruncation"
+                                           MaxLines="1" />
+                                </VerticalStackLayout>
+
+                                <!-- Amount and transaction type -->
+                                <VerticalStackLayout Grid.Column="2"
+                                                     Spacing="5"
+                                                     VerticalOptions="Center"
+                                                     HorizontalOptions="End">
+                                    <Label Text="{Binding Amount, StringFormat='UGX {0:N0}'}"
+                                        FontSize="13"
+                                        FontAttributes="Bold"
+                                        TextColor="{StaticResource Success}"
+                                        HorizontalTextAlignment="End">
+                                    
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label"
+                                                        Binding="{Binding Kind}"
+                                                        Value="Expense">
+                                                <Setter Property="TextColor"
+                                                        Value="{StaticResource Accent}" />
+                                            </DataTrigger>
+                                    
+                                            <DataTrigger TargetType="Label"
+                                                        Binding="{Binding IsExternallyFunded}"
+                                                        Value="True">
+                                                <Setter Property="TextColor"
+                                                        Value="{StaticResource Warning}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+
+                                    <Label Text="{Binding Kind}"
+                                           FontSize="10"
+                                           TextColor="{StaticResource TextMuted}"
+                                           HorizontalTextAlignment="End" />
+                                </VerticalStackLayout>
+
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
