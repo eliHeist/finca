@@ -35,7 +35,6 @@ public partial class OptionsPopup : Popup<string>
                     : primaryColor,
                 FontSize = 14,
                 HorizontalOptions = LayoutOptions.Fill,
-                HorizontalTextAlignment = TextAlignment.Start,
                 Padding = new Thickness(14, 12),
                 CornerRadius = 12,
                 CommandParameter = option.Key
