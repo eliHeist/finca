@@ -22,7 +22,7 @@
 
 	<ItemGroup>
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#322421" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#1E2C40" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\**\*" />

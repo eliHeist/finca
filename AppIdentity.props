@@ -2,7 +2,7 @@
     <PropertyGroup>
         <!-- Change these values on your Beta branch -->
         <ApplicationId>com.dakdot.financetracker.beta</ApplicationId>
-        <ApplicationTitle>FT Beta</ApplicationTitle>
+        <ApplicationTitle>Arupiya Beta</ApplicationTitle>
 
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
