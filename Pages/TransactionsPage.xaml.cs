@@ -1,6 +1,9 @@
 using FinanceTracker.Services;
 using FinanceTracker.ViewModels;
 
+using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Views;
+
 namespace FinanceTracker.Pages;
 
 public partial class TransactionsPage : ContentPage
@@ -19,7 +22,8 @@ public partial class TransactionsPage : ContentPage
         await _viewModel.LoadAsync();
     }
 
-    private async void OnDeleteClicked(object? sender, EventArgs e)
+    
+    private async void OnOptionsClicked(object? sender, EventArgs e)
     {
         if (sender is not Button
             {
@@ -28,7 +32,39 @@ public partial class TransactionsPage : ContentPage
         {
             return;
         }
+    
+        var popup = new TransactionOptionsPopup();
+    
+        var result = await this.ShowPopupAsync<bool>(
+            popup,
+            new PopupOptions
+            {
+                CanBeDismissedByTappingOutsideOfPopup = true,
+                PageOverlayColor = Colors.Transparent,
+                Shape = null,
+                Shadow = null
+            });
+    
+        if (result.WasDismissedByTappingOutsideOfPopup ||
+            result.Result != true)
+        {
+            return;
+        }
+    
+        var confirmed = await DisplayAlertAsync(
+            "Delete transaction",
+            $"Delete '{item.Title}'? This action cannot be undone.",
+            "Delete",
+            "Cancel");
+    
+        if (!confirmed)
+            return;
+    
+        await _viewModel.DeleteCommand.ExecuteAsync(item);
+    }
 
+    private async Task DeleteTransactionAsync(RecentTransaction item)
+    {
         var confirmed = await DisplayAlertAsync(
             "Delete transaction",
             $"Delete '{item.Title}'? This action cannot be undone.",
@@ -41,7 +77,7 @@ public partial class TransactionsPage : ContentPage
         await _viewModel.DeleteCommand.ExecuteAsync(item);
     }
 
-    private async void OnBackClicked(object sender, TappedEventArgs e)
+    private async void OnBackClicked(object? sender, TappedEventArgs e)
     {
         await Shell.Current.GoToAsync("..", animate: true);
     }
