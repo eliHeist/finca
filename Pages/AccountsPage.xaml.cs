@@ -60,4 +60,9 @@ public partial class AccountsPage : ContentPage
         if (confirmed)
             await _viewModel.SetActiveAsync(account, activate);
     }
+
+    private async void OnBackClicked(object sender, TappedEventArgs e)
+    {
+        await Shell.Current.GoToAsync("//SettingsPage");
+    }
 }

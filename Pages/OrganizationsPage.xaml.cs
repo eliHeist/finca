@@ -68,4 +68,9 @@ public partial class OrganizationsPage : ContentPage
         if (confirmed)
             await _viewModel.SetActiveAsync(organization, activate);
     }
+
+    private async void OnBackClicked(object sender, TappedEventArgs e)
+    {
+        await Shell.Current.GoToAsync("//SettingsPage");
+    }
 }

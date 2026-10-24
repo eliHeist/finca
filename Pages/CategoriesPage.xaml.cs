@@ -83,4 +83,9 @@ public partial class CategoriesPage : ContentPage
         if (confirmed)
             await _viewModel.SetActiveAsync(category, activate);
     }
+
+    private async void OnBackClicked(object sender, TappedEventArgs e)
+    {
+        await Shell.Current.GoToAsync("//SettingsPage");
+    }
 }
