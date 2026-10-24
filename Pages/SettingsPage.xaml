@@ -52,7 +52,7 @@
                             VerticalOptions="Center">
 
                             <Image
-                                Source="icons/credit_card.svg"
+                                Source="icons/credit_card.png"
                                 WidthRequest="24"
                                 HeightRequest="24"
                                 Aspect="AspectFit"
@@ -79,7 +79,7 @@
 
                         <Image
                             Grid.Column="2"
-                            Source="icons/chevron_right.svg"
+                            Source="icons/chevron_right.png"
                             WidthRequest="18"
                             HeightRequest="18"
                             VerticalOptions="Center" />
@@ -111,7 +111,7 @@
                             VerticalOptions="Center">
 
                             <Image
-                                Source="icons/domain.svg"
+                                Source="icons/domain.png"
                                 WidthRequest="24"
                                 HeightRequest="24"
                                 Aspect="AspectFit"
@@ -138,7 +138,7 @@
 
                         <Image
                             Grid.Column="2"
-                            Source="icons/chevron_right.svg"
+                            Source="icons/chevron_right.png"
                             WidthRequest="18"
                             HeightRequest="18"
                             VerticalOptions="Center" />
@@ -170,7 +170,7 @@
                             VerticalOptions="Center">
 
                             <Image
-                                Source="icons/category.svg"
+                                Source="icons/category.png"
                                 WidthRequest="24"
                                 HeightRequest="24"
                                 Aspect="AspectFit"
@@ -197,7 +197,7 @@
 
                         <Image
                             Grid.Column="2"
-                            Source="icons/chevron_right.svg"
+                            Source="icons/chevron_right.png"
                             WidthRequest="18"
                             HeightRequest="18"
                             VerticalOptions="Center" />
@@ -239,7 +239,7 @@
                             VerticalOptions="Center">
 
                             <Image
-                                Source="icons/credit_card.svg"
+                                Source="icons/credit_card.png"
                                 WidthRequest="24"
                                 HeightRequest="24"
                                 Aspect="AspectFit"

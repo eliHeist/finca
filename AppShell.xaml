@@ -18,21 +18,21 @@
     <TabBar>
         <ShellContent
             Title="Home"
-            Icon="icons/home.svg"
+            Icon="icons/home.png"
             Route="HomePage"
-            ContentTemplate="{DataTemplate local:MainPage}" />
+            ContentTemplate="{DataTemplate local:HomePage}" />
 
         <!-- Reports -->
         <ShellContent
             Title="Reports"
-            Icon="icons/analytics.svg"
+            Icon="icons/analytics.png"
             Route="ReportsPage"
             ContentTemplate="{DataTemplate local:ReportsPage}" />
 
         <!-- Settings -->
         <ShellContent
             Title="Settings"
-            Icon="icons/settings.svg"
+            Icon="icons/settings.png"
             Route="SettingsPage"
             ContentTemplate="{DataTemplate local:SettingsPage}" />
     </TabBar>
