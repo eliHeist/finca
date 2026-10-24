@@ -67,21 +67,11 @@
         </VerticalStackLayout>
 
         <!-- Error message -->
-        <Border
-            Grid.Row="1"
-            Padding="12"
-            BackgroundColor="{StaticResource Surface}"
-            Stroke="{StaticResource Error}"
-            StrokeThickness="1"
-            StrokeShape="RoundRectangle 12"
-            IsVisible="{Binding HasError}">
-
-            <Label
-                Text="{Binding ErrorMessage}"
-                TextColor="{StaticResource Error}"
-                FontSize="13"
-                LineBreakMode="WordWrap" />
-        </Border>
+        <Label
+            Text="{Binding ErrorMessage}"
+            TextColor="{StaticResource Error}"
+            FontSize="13"
+            LineBreakMode="WordWrap" />
 
         <!-- Organizations -->
         <CollectionView

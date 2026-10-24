@@ -52,17 +52,9 @@
         </Grid>
 
         <!-- Error message -->
-        <Border Grid.Row="1"
-                Padding="12"
-                BackgroundColor="{StaticResource Surface}"
-                Stroke="{StaticResource Error}"
-                StrokeThickness="1"
-                StrokeShape="RoundRectangle 12">
-
-            <Label Text="{Binding ErrorMessage}"
-                   TextColor="{StaticResource Error}"
-                   FontSize="13" />
-        </Border>
+        <Label Text="{Binding ErrorMessage}"
+                TextColor="{StaticResource Error}"
+                FontSize="13" />
 
         <!-- Accounts list -->
         <CollectionView Grid.Row="2"
