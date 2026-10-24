@@ -133,7 +133,6 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:CategoryRow">
-
                     <Border
                         Margin="0,0,0,12"
                         Padding="16"
@@ -141,14 +140,14 @@
                         Stroke="{StaticResource Border}"
                         StrokeThickness="1"
                         StrokeShape="RoundRectangle 16">
-
-                        <VerticalStackLayout Spacing="16">
-
-                            <!-- Category details -->
+            
+                        <VerticalStackLayout Spacing="14">
+            
+                            <!-- Category details and options -->
                             <Grid
                                 ColumnDefinitions="Auto,*,Auto"
                                 ColumnSpacing="12">
-
+            
                                 <Border
                                     WidthRequest="44"
                                     HeightRequest="44"
@@ -156,7 +155,7 @@
                                     StrokeThickness="0"
                                     StrokeShape="RoundRectangle 13"
                                     VerticalOptions="Center">
-
+            
                                     <Image
                                         Source="icons/tags.svg"
                                         WidthRequest="23"
@@ -164,104 +163,92 @@
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center" />
                                 </Border>
-
+            
                                 <VerticalStackLayout
                                     Grid.Column="1"
                                     Spacing="5"
                                     VerticalOptions="Center">
-
+            
                                     <Label
                                         Text="{Binding Name}"
                                         FontSize="16"
                                         FontAttributes="Bold"
                                         TextColor="{StaticResource TextPrimary}"
                                         LineBreakMode="WordWrap" />
-
+            
                                     <Label
                                         Text="{Binding KindLabel}"
                                         FontSize="12"
                                         TextColor="{StaticResource TextMuted}" />
                                 </VerticalStackLayout>
-
-                                <!-- Status badge -->
-                                <Border
+            
+                                <HorizontalStackLayout
                                     Grid.Column="2"
-                                    Padding="9,5"
-                                    BackgroundColor="#2035D995"
-                                    StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 8"
+                                    Spacing="8"
                                     VerticalOptions="Center">
-
-                                    <Label
-                                        Text="Active"
-                                        FontSize="11"
-                                        FontAttributes="Bold"
-                                        TextColor="{StaticResource Success}">
-
-                                        <Label.Triggers>
+            
+                                    <!-- Status badge -->
+                                    <Border
+                                        Padding="9,5"
+                                        BackgroundColor="#2035D995"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 8"
+                                        VerticalOptions="Center">
+            
+                                        <Label
+                                            Text="Active"
+                                            FontSize="11"
+                                            FontAttributes="Bold"
+                                            TextColor="{StaticResource Success}">
+            
+                                            <Label.Triggers>
+                                                <DataTrigger
+                                                    TargetType="Label"
+                                                    Binding="{Binding IsActive}"
+                                                    Value="False">
+            
+                                                    <Setter
+                                                        Property="Text"
+                                                        Value="Inactive" />
+            
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="{StaticResource TextMuted}" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+            
+                                        <Border.Triggers>
                                             <DataTrigger
-                                                TargetType="Label"
+                                                TargetType="Border"
                                                 Binding="{Binding IsActive}"
                                                 Value="False">
+            
                                                 <Setter
-                                                    Property="Text"
-                                                    Value="Inactive" />
-                                                <Setter
-                                                    Property="TextColor"
-                                                    Value="{StaticResource TextMuted}" />
+                                                    Property="BackgroundColor"
+                                                    Value="{StaticResource PageBackground}" />
                                             </DataTrigger>
-                                        </Label.Triggers>
-                                    </Label>
-
-                                    <Border.Triggers>
-                                        <DataTrigger
-                                            TargetType="Border"
-                                            Binding="{Binding IsActive}"
-                                            Value="False">
-                                            <Setter
-                                                Property="BackgroundColor"
-                                                Value="{StaticResource PageBackground}" />
-                                        </DataTrigger>
-                                    </Border.Triggers>
-                                </Border>
+                                        </Border.Triggers>
+                                    </Border>
+            
+                                    <!-- Options menu -->
+                                    <Button
+                                        Text="⋮"
+                                        Clicked="OnOptionsClicked"
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="Transparent"
+                                        TextColor="{StaticResource TextMuted}"
+                                        FontSize="22"
+                                        Padding="0"
+                                        WidthRequest="32"
+                                        HeightRequest="36"
+                                        MinimumWidthRequest="32"
+                                        MinimumHeightRequest="36"
+                                        CornerRadius="16"
+                                        VerticalOptions="Center" />
+                                </HorizontalStackLayout>
                             </Grid>
-
-                            <BoxView
-                                HeightRequest="1"
-                                Color="{StaticResource Border}" />
-
-                            <!-- Actions -->
-                            <Grid
-                                ColumnDefinitions="*,*"
-                                ColumnSpacing="10">
-
-                                <Button
-                                    Text="Rename"
-                                    Clicked="OnRenameClicked"
-                                    CommandParameter="{Binding .}"
-                                    BackgroundColor="{StaticResource PageBackground}"
-                                    TextColor="{StaticResource TextPrimary}"
-                                    BorderColor="{StaticResource Border}"
-                                    BorderWidth="1"
-                                    FontSize="13"
-                                    CornerRadius="12"
-                                    HeightRequest="42" />
-
-                                <Button
-                                    Grid.Column="1"
-                                    Text="{Binding StatusAction}"
-                                    Clicked="OnToggleActiveClicked"
-                                    CommandParameter="{Binding .}"
-                                    BackgroundColor="{StaticResource Surface}"
-                                    TextColor="{StaticResource Accent}"
-                                    BorderColor="{StaticResource Accent}"
-                                    BorderWidth="1"
-                                    FontSize="13"
-                                    FontAttributes="Bold"
-                                    CornerRadius="12"
-                                    HeightRequest="42" />
-                            </Grid>
-
+            
                         </VerticalStackLayout>
                     </Border>
                 </DataTemplate>

@@ -1,5 +1,7 @@
-
 using FinanceTracker.ViewModels;
+
+using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Views;
 
 namespace FinanceTracker.Pages;
 
@@ -19,36 +21,22 @@ public partial class AccountsPage : ContentPage
         await _viewModel.LoadAsync();
     }
 
-    private async void OnRenameClicked(object sender, EventArgs e)
+    private async Task RenameAccountAsync(AccountRow account)
     {
-        if (sender is not Button
-            {
-                CommandParameter: AccountRow account
-            })
-            return;
-
         var name = await DisplayPromptAsync(
             "Rename account",
             "Enter the new account name:",
             initialValue: account.Name,
             maxLength: 60);
-
-        if (name is null)
-            return;
-
-        await _viewModel.RenameAsync(account.Id, name);
+    
+        if (name is not null)
+            await _viewModel.RenameAsync(account.Id, name);
     }
-
-    private async void OnToggleActiveClicked(object sender, EventArgs e)
+    
+    private async Task ToggleAccountActiveAsync(AccountRow account)
     {
-        if (sender is not Button
-            {
-                CommandParameter: AccountRow account
-            })
-            return;
-
         var activate = !account.IsActive;
-
+    
         var confirmed = await DisplayAlertAsync(
             $"{(activate ? "Activate" : "Deactivate")} account",
             activate
@@ -56,9 +44,43 @@ public partial class AccountsPage : ContentPage
                 : $"Deactivate '{account.Name}'? Recording new transactions of this type will be unavailable while the account is inactive.",
             activate ? "Activate" : "Deactivate",
             "Cancel");
-
+    
         if (confirmed)
             await _viewModel.SetActiveAsync(account, activate);
+    }
+
+    private async void OnOptionsClicked(object? sender, EventArgs e)
+    {
+        if (sender is not Button
+            {
+                CommandParameter: AccountRow account
+            })
+            return;
+    
+        var options = new OptionsPopup(
+            "Account options",
+            new[]
+            {
+                new PopupOption("rename", "Rename account"),
+                new PopupOption(
+                    "toggle",
+                    account.IsActive
+                        ? "Deactivate account"
+                        : "Activate account")
+            });
+    
+        var result = await this.ShowPopupAsync<string>(options);
+    
+        switch (result.Result)
+        {
+            case "rename":
+                await RenameAccountAsync(account);
+                break;
+    
+            case "toggle":
+                await ToggleAccountActiveAsync(account);
+                break;
+        }
     }
 
     private async void OnBackClicked(object sender, TappedEventArgs e)

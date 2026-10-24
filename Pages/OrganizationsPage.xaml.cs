@@ -1,5 +1,8 @@
 using FinanceTracker.ViewModels;
 
+using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Views;
+
 namespace FinanceTracker.Pages;
 
 public partial class OrganizationsPage : ContentPage
@@ -29,42 +32,70 @@ public partial class OrganizationsPage : ContentPage
             await _viewModel.CreateAsync(name);
     }
 
-    private async void OnRenameClicked(object? sender, EventArgs e)
+    private async void OnOptionsClicked(object? sender, EventArgs e)
     {
         if (sender is not Button
             {
                 CommandParameter: OrganizationRow organization
             })
+        {
             return;
-
+        }
+    
+        var popup = new OptionsPopup(
+            "Funding source options",
+            new[]
+            {
+                new PopupOption("rename", "Rename organization"),
+                new PopupOption(
+                    "toggle",
+                    organization.IsActive
+                        ? "Deactivate organization"
+                        : "Activate organization")
+            });
+    
+        var result = await this.ShowPopupAsync<string>(popup);
+    
+        switch (result.Result)
+        {
+            case "rename":
+                await RenameOrganizationAsync(organization);
+                break;
+    
+            case "toggle":
+                await ToggleOrganizationActiveAsync(organization);
+                break;
+        }
+    }
+    
+    private async Task RenameOrganizationAsync(
+        OrganizationRow organization)
+    {
         var name = await DisplayPromptAsync(
             "Rename organization",
-            "Enter the new name:",
+            "Enter the new organization name:",
             initialValue: organization.Name,
-            maxLength: 100);
-
-        if (name is not null)
-            await _viewModel.RenameAsync(organization.Id, name);
-    }
-
-    private async void OnToggleActiveClicked(object? sender, EventArgs e)
-    {
-        if (sender is not Button
-            {
-                CommandParameter: OrganizationRow organization
-            })
+            maxLength: 60);
+    
+        if (name is null)
             return;
-
+    
+        await _viewModel.RenameAsync(organization.Id, name);
+    }
+    
+    private async Task ToggleOrganizationActiveAsync(
+        OrganizationRow organization)
+    {
         var activate = !organization.IsActive;
-
-        var confirmed = await DisplayAlert(
+    
+        var confirmed = await DisplayAlertAsync(
             activate ? "Activate organization" : "Deactivate organization",
             activate
                 ? $"Activate '{organization.Name}'?"
-                : $"Deactivate '{organization.Name}'? It will no longer be available for new funding records, but existing transactions will remain.",
+                : $"Deactivate '{organization.Name}'?",
             activate ? "Activate" : "Deactivate",
             "Cancel");
-
+    
         if (confirmed)
             await _viewModel.SetActiveAsync(organization, activate);
     }
