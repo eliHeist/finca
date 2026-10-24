@@ -9,28 +9,36 @@
     BackgroundColor="Transparent">
 
     <Border
-        WidthRequest="260"
-        Padding="8"
+        WidthRequest="300"
+        Padding="16"
         BackgroundColor="{StaticResource Surface}"
-        Stroke="{StaticResource Border}"
-        StrokeThickness="1">
+        StrokeThickness="0">
 
         <Border.StrokeShape>
-            <RoundRectangle CornerRadius="18" />
+            <RoundRectangle CornerRadius="22" />
         </Border.StrokeShape>
 
         <VerticalStackLayout Spacing="4">
+
             <Label
                 x:Name="PopupTitle"
                 Text="OPTIONS"
-                Margin="10,8,10,6"
+                Margin="12,10,12,8"
                 FontSize="11"
-                CharacterSpacing="1"
+                CharacterSpacing="1.2"
+                FontAttributes="Bold"
+                HorizontalTextAlignment="Center"
                 TextColor="{StaticResource TextMuted}" />
 
             <VerticalStackLayout
                 x:Name="OptionsLayout"
-                Spacing="4" />
+                Spacing="3" />
+
+            <BoxView
+                HeightRequest="1"
+                Margin="4,4"
+                Color="{StaticResource Border}"
+                Opacity="0.5" />
 
             <Button
                 Text="Cancel"
@@ -39,8 +47,9 @@
                 TextColor="{StaticResource TextMuted}"
                 FontSize="14"
                 HorizontalOptions="Fill"
-                Padding="12,10"
-                CornerRadius="10" />
+                Padding="12,12"
+                CornerRadius="12" />
+
         </VerticalStackLayout>
     </Border>
 </toolkit:Popup>

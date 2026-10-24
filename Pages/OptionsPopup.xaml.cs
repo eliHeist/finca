@@ -17,19 +17,27 @@ public partial class OptionsPopup : Popup<string>
 
         PopupTitle.Text = title.ToUpperInvariant();
 
+        var primaryColor = GetResourceColor("TextPrimary");
+        var errorColor = GetResourceColor("Error");
+        var primaryColorBg = GetResourceColor("Secondary");
+        var errorColorBg = GetResourceColor("ErrorBg");
+
         foreach (var option in options)
         {
             var button = new Button
             {
                 Text = option.Label,
-                BackgroundColor = Colors.Transparent,
+                BackgroundColor = option.IsDestructive
+                    ? errorColorBg
+                    : primaryColorBg,
                 TextColor = option.IsDestructive
-                    ? Color.FromArgb("#D92D20")
-                    : Color.FromArgb("#17232F"),
+                    ? errorColor
+                    : primaryColor,
                 FontSize = 14,
                 HorizontalOptions = LayoutOptions.Fill,
-                Padding = new Thickness(12, 10),
-                CornerRadius = 10,
+                HorizontalTextAlignment = TextAlignment.Start,
+                Padding = new Thickness(14, 12),
+                CornerRadius = 12,
                 CommandParameter = option.Key
             };
 
@@ -38,10 +46,24 @@ public partial class OptionsPopup : Popup<string>
         }
     }
 
+    private static Color GetResourceColor(string key)
+    {
+        if (Application.Current?.Resources.TryGetValue(
+                key, out var value) == true
+            && value is Color color)
+        {
+            return color;
+        }
+
+        return Colors.White;
+    }
+
     private async void OnOptionClicked(object? sender, EventArgs e)
     {
         if (sender is Button { CommandParameter: string key })
+        {
             await CloseAsync(key);
+        }
     }
 
     private async void OnCancelClicked(object? sender, EventArgs e)

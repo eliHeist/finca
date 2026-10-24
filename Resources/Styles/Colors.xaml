@@ -12,8 +12,8 @@
     <Color x:Key="PrimaryDarkText">#FF6B45</Color>
 
     <!-- Secondary brand colors -->
-    <Color x:Key="Secondary">#FF7955</Color>
-    <Color x:Key="SecondaryDarkText">#FF9A7F</Color>
+    <Color x:Key="Secondary">#1E2C40</Color>
+    <Color x:Key="SecondaryDarkText">#6798DF</Color>
     <Color x:Key="Tertiary">#8D4938</Color>
 
     <!-- Base colors -->
@@ -47,6 +47,7 @@
     <Color x:Key="Warning">#F5B942</Color>
     <Color x:Key="Danger">#F2390A</Color>
     <Color x:Key="Error">#FF5C46</Color>
+    <Color x:Key="ErrorBg">#331B17</Color>
 
     <!-- Original brushes retained -->
     <SolidColorBrush

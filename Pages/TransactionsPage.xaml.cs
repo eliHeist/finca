@@ -33,10 +33,19 @@ public partial class TransactionsPage : ContentPage
             return;
         }
     
-        var popup = new TransactionOptionsPopup();
-        var result = await this.ShowPopupAsync<bool>(popup);
+        var popup = new OptionsPopup(
+            "Transaction options",
+            new[]
+            {
+                new PopupOption(
+                    "delete",
+                    "Delete transaction",
+                    IsDestructive: true)
+            });
     
-        if (result.Result != true)
+        var result = await this.ShowPopupAsync<string>(popup);
+    
+        if (result.Result != "delete")
             return;
     
         var confirmed = await DisplayAlertAsync(
