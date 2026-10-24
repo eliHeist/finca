@@ -4,7 +4,7 @@
         <ApplicationId>com.dakdot.financetracker</ApplicationId>
         <ApplicationTitle>Arupiya</ApplicationTitle>
 
-        <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+        <ApplicationDisplayVersion>1.1</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
     </PropertyGroup>
 
