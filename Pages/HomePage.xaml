@@ -40,8 +40,8 @@
                         StrokeShape="RoundRectangle 16"
                         VerticalOptions="Center">
                     <Image Source="icon.png"
-                           WidthRequest="32"
-                           HeightRequest="32"
+                           WidthRequest="48"
+                           HeightRequest="48"
                            Aspect="AspectFit"
                            HorizontalOptions="Center"
                            VerticalOptions="Center" />
