@@ -213,12 +213,12 @@
             </VerticalStackLayout>
 
             <!-- About section -->
-            <VerticalStackLayout Spacing="8">
+            <VerticalStackLayout Spacing="2">
 
                 <Image
                     Source="logo.png"
-                    WidthRequest="356"
-                    HeightRequest="356"
+                    WidthRequest="256"
+                    HeightRequest="256"
                     Aspect="AspectFit"
                     HorizontalOptions="Center"
                     VerticalOptions="Center" />
@@ -227,6 +227,7 @@
                     Text="by eliHeist"
                     FontSize="12"
                     FontAttributes="Bold"
+                    HorizontalOptions="Center"
                     TextColor="{StaticResource TextMuted}" />
 
             </VerticalStackLayout>
