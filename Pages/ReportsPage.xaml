@@ -40,9 +40,7 @@
                         FontAttributes="Bold"
                         TextColor="{StaticResource TextPrimary}" />
 
-                    <Grid
-                        ColumnDefinitions="*,*"
-                        ColumnSpacing="12">
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
 
                         <VerticalStackLayout Spacing="8">
                             <Label
@@ -370,6 +368,197 @@
                             Text="Genuine income minus personal expenses."
                             FontSize="12"
                             TextColor="{StaticResource TextMuted}" />
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Expense categories -->
+            <VerticalStackLayout Spacing="5">
+                <Label
+                    Text="Expenses by category"
+                    FontSize="21"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource TextPrimary}" />
+
+                <Label
+                    Text="See how your spending is distributed across categories."
+                    FontSize="13"
+                    TextColor="{StaticResource TextMuted}" />
+            </VerticalStackLayout>
+
+            <Border
+                Padding="18"
+                BackgroundColor="{StaticResource Surface}"
+                Stroke="{StaticResource Border}"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 16">
+
+                <VerticalStackLayout Spacing="16">
+
+                    <VerticalStackLayout
+                        BindableLayout.ItemsSource="{Binding ExpenseCategories}"
+                        Spacing="16">
+
+                        <BindableLayout.EmptyView>
+                            <Label
+                                Text="No expenses recorded for this period."
+                                FontSize="13"
+                                TextColor="{StaticResource TextMuted}"
+                                HorizontalTextAlignment="Center"
+                                Margin="0,12" />
+                        </BindableLayout.EmptyView>
+
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout Spacing="9">
+
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label
+                                            Text="{Binding CategoryName}"
+                                            FontSize="14"
+                                            FontAttributes="Bold"
+                                            TextColor="{StaticResource TextPrimary}" />
+
+                                        <Label
+                                            Grid.Column="1"
+                                            Text="{Binding TotalAmount}"
+                                            FontSize="14"
+                                            FontAttributes="Bold"
+                                            TextColor="{StaticResource TextPrimary}" />
+                                    </Grid>
+
+                                    <Grid ColumnDefinitions="*,*"
+                                          ColumnSpacing="12">
+
+                                        <VerticalStackLayout Spacing="3">
+                                            <Label
+                                                Text="Personal"
+                                                FontSize="11"
+                                                TextColor="{StaticResource TextMuted}" />
+
+                                            <Label
+                                                Text="{Binding PersonalAmount}"
+                                                FontSize="12"
+                                                FontAttributes="Bold"
+                                                TextColor="{StaticResource Accent}" />
+                                        </VerticalStackLayout>
+
+                                        <VerticalStackLayout
+                                            Grid.Column="1"
+                                            Spacing="3">
+
+                                            <Label
+                                                Text="Employer-funded"
+                                                FontSize="11"
+                                                TextColor="{StaticResource TextMuted}" />
+
+                                            <Label
+                                                Text="{Binding EmployerAmount}"
+                                                FontSize="12"
+                                                FontAttributes="Bold"
+                                                TextColor="{StaticResource Warning}" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+
+                                    <ProgressBar
+                                        Progress="{Binding Progress}"
+                                        ProgressColor="{StaticResource Accent}"
+                                        BackgroundColor="{StaticResource Border}"
+                                        HeightRequest="6" />
+
+                                    <Label
+                                        Text="{Binding Percentage, StringFormat='{0:F1}% of expenses'}"
+                                        FontSize="11"
+                                        TextColor="{StaticResource TextMuted}" />
+
+                                    <BoxView
+                                        HeightRequest="1"
+                                        Color="{StaticResource Border}"
+                                        Opacity="0.6" />
+
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Income categories -->
+            <VerticalStackLayout Spacing="5">
+                <Label
+                    Text="Income by category"
+                    FontSize="21"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource TextPrimary}" />
+
+                <Label
+                    Text="See where your genuine income came from."
+                    FontSize="13"
+                    TextColor="{StaticResource TextMuted}" />
+            </VerticalStackLayout>
+
+            <Border
+                Padding="18"
+                BackgroundColor="{StaticResource Surface}"
+                Stroke="{StaticResource Border}"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 16">
+
+                <VerticalStackLayout Spacing="16">
+
+                    <VerticalStackLayout
+                        BindableLayout.ItemsSource="{Binding IncomeCategories}"
+                        Spacing="16">
+
+                        <BindableLayout.EmptyView>
+                            <Label
+                                Text="No genuine income recorded for this period."
+                                FontSize="13"
+                                TextColor="{StaticResource TextMuted}"
+                                HorizontalTextAlignment="Center"
+                                Margin="0,12" />
+                        </BindableLayout.EmptyView>
+
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout Spacing="9">
+
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label
+                                            Text="{Binding CategoryName}"
+                                            FontSize="14"
+                                            FontAttributes="Bold"
+                                            TextColor="{StaticResource TextPrimary}" />
+
+                                        <Label
+                                            Grid.Column="1"
+                                            Text="{Binding Amount}"
+                                            FontSize="14"
+                                            FontAttributes="Bold"
+                                            TextColor="{StaticResource Success}" />
+                                    </Grid>
+
+                                    <ProgressBar
+                                        Progress="{Binding Progress}"
+                                        ProgressColor="{StaticResource Success}"
+                                        BackgroundColor="{StaticResource Border}"
+                                        HeightRequest="6" />
+
+                                    <Label
+                                        Text="{Binding Percentage, StringFormat='{0:F1}% of income'}"
+                                        FontSize="11"
+                                        TextColor="{StaticResource TextMuted}" />
+
+                                    <BoxView
+                                        HeightRequest="1"
+                                        Color="{StaticResource Border}"
+                                        Opacity="0.6" />
+
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
 
                 </VerticalStackLayout>

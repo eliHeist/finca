@@ -21,27 +21,27 @@
                            CharacterSpacing="2"
                            TextColor="{StaticResource TextMuted}" />
 
-                    <Label Text="Your money."
+                    <Label Text="Arupiya"
                            FontSize="30"
                            FontAttributes="Bold"
                            TextColor="{StaticResource TextPrimary}" />
 
-                    <Label Text="Your financial overview"
+                    <Label Text="Your financial flow overview"
                            FontSize="14"
                            TextColor="{StaticResource TextMuted}" />
                 </VerticalStackLayout>
 
                 <Border Grid.Column="1"
-                        WidthRequest="48"
-                        HeightRequest="48"
+                        WidthRequest="56"
+                        HeightRequest="56"
                         BackgroundColor="{StaticResource Surface}"
                         Stroke="{StaticResource Border}"
                         StrokeThickness="1"
                         StrokeShape="RoundRectangle 16"
                         VerticalOptions="Center">
-                    <Image Source="icons/wallet.png"
-                           WidthRequest="24"
-                           HeightRequest="24"
+                    <Image Source="icon.png"
+                           WidthRequest="32"
+                           HeightRequest="32"
                            Aspect="AspectFit"
                            HorizontalOptions="Center"
                            VerticalOptions="Center" />

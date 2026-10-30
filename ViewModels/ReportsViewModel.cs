@@ -1,3 +1,4 @@
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinanceTracker.Services;
@@ -38,6 +39,10 @@ public partial class ReportsViewModel(
     private string personalNetTotal = "UGX 0";
 
     public ObservableCollection<ExternalFundingDisplay> ExternalFunding { get; } = [];
+
+    public ObservableCollection<ExpenseCategoryDisplay> ExpenseCategories { get; } = [];
+
+    public ObservableCollection<IncomeCategoryDisplay> IncomeCategories { get; } = [];
 
     [RelayCommand]
     public async Task LoadAsync()
@@ -88,6 +93,30 @@ public partial class ReportsViewModel(
                     source.SourceName,
                     FormatMoney(source.Amount)));
             }
+
+            ExpenseCategories.Clear();
+
+            foreach (var category in report.ExpenseCategories)
+            {
+                ExpenseCategories.Add(new ExpenseCategoryDisplay(
+                    category.CategoryName,
+                    FormatMoney(category.PersonalAmount),
+                    FormatMoney(category.EmployerAmount),
+                    FormatMoney(category.TotalAmount),
+                    category.Percentage,
+                    category.Percentage / 100d));
+            }
+
+            IncomeCategories.Clear();
+
+            foreach (var category in report.IncomeCategories)
+            {
+                IncomeCategories.Add(new IncomeCategoryDisplay(
+                    category.CategoryName,
+                    FormatMoney(category.Amount),
+                    category.Percentage,
+                    category.Percentage / 100d));
+            }
         }
         catch (Exception ex)
         {
@@ -106,3 +135,17 @@ public partial class ReportsViewModel(
 public sealed record ExternalFundingDisplay(
     string SourceName,
     string Amount);
+
+public sealed record ExpenseCategoryDisplay(
+    string CategoryName,
+    string PersonalAmount,
+    string EmployerAmount,
+    string TotalAmount,
+    double Percentage,
+    double Progress);
+
+public sealed record IncomeCategoryDisplay(
+    string CategoryName,
+    string Amount,
+    double Percentage,
+    double Progress);
